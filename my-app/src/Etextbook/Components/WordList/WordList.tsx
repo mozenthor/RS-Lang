@@ -6,7 +6,7 @@ import styles from "../../Etextbook.module.css";
 export const WordList: React.FC<IWordListProps> = (props) => {
     return (
         <div className={styles.word_container}>
-                {props.data.map(word => <WordItem  data={word} isAuth={props.isAuth}  key={word.id}/>)}
+                {props.data.map(word => <WordItem fetchUserWords={props.fetchUserWords} userWords={props.userWords} data={word} isAuth={props.isAuth}  key={word.id}/>)}
         </div>
     )
 }

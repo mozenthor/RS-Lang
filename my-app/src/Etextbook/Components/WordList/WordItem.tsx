@@ -3,43 +3,43 @@ import { getUserData, playAudio } from "../../../util/playAudio";
 import { useEffect, useState } from "react";
 import { addWord, deleteWord } from "../../service/service";
 import axios from "axios";
-import { IWordProps } from '../../ETextBook';
+import { IUserWord, IWordProps } from '../../ETextBook';
 const SERVER_URL = 'https://final-rslang-backend.herokuapp.com/';
 const WordItem: React.FC<IWordProps> = (props) => {
-
     const [isHard, setHard] = useState(false);
-
     async function checkWord(wordId:string) {
-        const data = getUserData();
-        const header = {
-            'Authorization': `Bearer ${data.token}`,
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
-        const response = await axios({
-            method: 'get',
-            url: `https://final-rslang-backend.herokuapp.com/users/${data.id}/words/${wordId}`,
-            headers: header,
-        }).then(() => {
-            console.log('слово есть');
-            setHard(true);
-        }
-        ).catch(function (error) {
-            if (error.response) {
-                console.log('слова нет');
-                setHard(false);
-            }
-          });;
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        props.userWords.filter((item) => item.wordId === wordId).length === 0 ? setHard(false) : setHard(true);
+        // console.log(props.userWords);
+        // const data = getUserData();
+        // const header = {
+        //     'Authorization': `Bearer ${data.token}`,
+        //     'Accept': 'application/json',
+        //     'Content-Type': 'application/json'
+        // }
+        // const response = await axios({
+        //     method: 'get',
+        //     url: `https://final-rslang-backend.herokuapp.com/users/${data.id}/words/${wordId}`,
+        //     headers: header,
+        // }).then(() => {
+        //     console.log('слово есть');
+        //     setHard(true);
+        // }
+        // ).catch(function (error) {
+        //     if (error.response) {
+        //         console.log('слова нет');
+        //         setHard(false);
+        //     }
+        //   });;
     }
     useEffect(() => {
         checkWord(props.data.id);
-    }, [isHard]);
-
+    }, );
     const buttonOnClick = async () => {
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         isHard ? await deleteWord(props.data.id) : await addWord(props.data.id);
         setHard(!isHard);
-        
+        await props.fetchUserWords();
     }
     return (
     <div className={styles.word_item}>
