@@ -13,6 +13,7 @@ const Button: React.FC<IButton> = ({page, onClick}) => {
             }}>
             {page}
         </button>
+        
     )
 }
 export default Button;

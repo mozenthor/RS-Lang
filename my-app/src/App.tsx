@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AuthApp } from "./AuthorizationA/AuthApp.tsx/AuthApp";
+import { Dictionary } from "./Etextbook/Components/Dictionary/Dictionary";
 import ETextBook from "./Etextbook/ETextBook";
 
 function App() {
@@ -16,6 +17,10 @@ function App() {
           <Routes>
             <Route path={'/textbook/'} element = {<ETextBook />} />
           </Routes>
+          <Routes>
+            <Route path={'/textbook/dictionary'} element = {<ETextBook> <Dictionary /> </ETextBook>} />
+          </Routes>
+          
     </BrowserRouter>
     </div>
   );

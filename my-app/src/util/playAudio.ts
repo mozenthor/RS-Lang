@@ -10,3 +10,15 @@ export const playAudio = (audioArr: string[])=> {
         mediaArray[2].play();
     }
 };
+
+export const checkLogin = () => {
+    if(localStorage.getItem('token')) return true;
+    return false;
+}
+
+export const getUserData = () => {
+    return {
+        token: localStorage.getItem('token'),
+        id: localStorage.getItem('userId'),
+    }
+}
