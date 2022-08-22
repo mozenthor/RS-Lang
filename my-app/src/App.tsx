@@ -1,27 +1,35 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { AuthApp } from "./AuthorizationA/AuthApp.tsx/AuthApp";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import ETextBook from './Etextbook/ETextBook';
+import Header from './MainPage/components/Header';
+import Footer from './MainPage/components/Footer';
+import styles from './MainPage/Page.module.css';
+import MainPage from './MainPage/MainPage';
+
 import { Dictionary } from "./Etextbook/Components/Dictionary/Dictionary";
-import ETextBook from "./Etextbook/ETextBook";
+import { AuthApp } from './AuthorizationA/AuthApp.tsx/AuthApp';
 
 function App() {
   return (
-    <div>
-    
-    <BrowserRouter>
-          <Routes>
-            <Route path={'/authorization'} element = {<AuthApp />} />
-          </Routes>
-          <Routes>
-            <Route path={'/textbook/:group/:page'} element = {<ETextBook />} />
-          </Routes>
-          <Routes>
-            <Route path={'/textbook/'} element = {<ETextBook />} />
-          </Routes>
-          <Routes>
+    <div className={styles.wrapper}>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path={'/'} element={<MainPage />} />
+        </Routes>
+        <Routes>
+          <Route path={'/authorization'} element={<AuthApp />} />
+        </Routes>
+        <Routes>
+          <Route path={'/textbook/:group/:page'} element={<ETextBook />} />
+        </Routes>
+        <Routes>
+          <Route path={'/textbook/'} element={<ETextBook />} />
+        </Routes>
+        <Routes>
             <Route path={'/textbook/dictionary'} element = {<ETextBook> <Dictionary /> </ETextBook>} />
-          </Routes>
-          
-    </BrowserRouter>
+        </Routes>
+        <Footer />
+      </BrowserRouter>
     </div>
   );
 }
