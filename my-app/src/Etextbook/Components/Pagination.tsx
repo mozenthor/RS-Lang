@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
+import { IPaginationProps } from "../interfaces/interfaces";
 
-interface IPaginationProps {
-    page: string | undefined,
-    onLeftClick: (page:number) => void,
-    onRightClick: (page:number) => void,
-}
 
 const Pagination: React.FC<IPaginationProps> = ({page, onLeftClick,  onRightClick}) => {
     const [isLeftDisabled, setLeftDisable] = useState(true);

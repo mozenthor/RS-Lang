@@ -1,18 +1,16 @@
 import styles from '../Etextbook.module.css';
+import { IButtonProps } from '../interfaces/interfaces';
 
-interface IButton {
-    page:number,
-    onClick: (item: number) => void
-}
 
-const Button: React.FC<IButton> = ({page, onClick}) => {
+const Button: React.FC<IButtonProps> = (props) => {
     return (
         <button className={styles.group__button} onClick={() => { 
-            onClick(page);
+            props.onClick(props.page);
             console.log(this);
             }}>
-            {page}
+            {props.children || props.page}
         </button>
+        
     )
 }
 export default Button;

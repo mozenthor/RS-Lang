@@ -5,6 +5,7 @@ import Footer from './MainPage/components/Footer';
 import styles from './MainPage/Page.module.css';
 import MainPage from './MainPage/MainPage';
 import AuthApp from './pages/authorization';
+import { Dictionary } from "./Etextbook/Components/Dictionary/Dictionary";
 
 function App() {
   return (
@@ -22,6 +23,9 @@ function App() {
         </Routes>
         <Routes>
           <Route path={'/textbook/'} element={<ETextBook />} />
+        </Routes>
+        <Routes>
+            <Route path={'/textbook/dictionary'} element = {<ETextBook> <Dictionary /> </ETextBook>} />
         </Routes>
         <Footer />
       </BrowserRouter>

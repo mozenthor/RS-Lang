@@ -1,79 +1,58 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Button from "./Components/Button";
+import { checkLogin, } from "../util/util";
+import { Navigation } from "./Components/Navigation";
 import Pagination from "./Components/Pagination";
-import WordItem from "./Components/WordItem";
-import styles from './Etextbook.module.css';
+import { WordList } from "./Components/WordList/WordList";
+import { ITextBookProps, IUserWord, IWord } from "./interfaces/interfaces";
+import { fetchUserWords, fetchWords } from "./service/service";
 
-export interface IWord {
-    id: string,
-    group: number,
-    page: number,
-    word: string,
-    image: string,
-    audio: string,
-    audioMeaning: string,
-    audioExample: string,
-    textMeaning: string,
-    textExample: string,
-    transcription: string,
-    wordTranslate: string,
-    textMeaningTranslate: string,
-    textExampleTranslate: string
-}
-export interface IWordProps {
-    data: IWord,
-}
-export interface ITextBookParams {
-    group: string,
-    page: string,
-}
-const ETextBook: React.FC = () => {
+
+const ETextBook: React.FC<ITextBookProps> = ({children}) => {
     const [words, setWords] = useState<IWord[]>([]);
+    const [userWords, setUserWords] = useState<IUserWord[]>([]);
     const params = useParams<{group: string, page:string }>();
     const history = useNavigate();
     const groups = [0,1,2,3,4,5];
+    const [isAuth, setAuth] = useState(false);
 
-    async function fetchWords(page: string, group: string) {
-        const response = await axios.get<IWord[]>(`https://final-rslang-backend.herokuapp.com/words?page=${page}&group=${group}`);
-        setWords(response.data);
-    }
     
     useEffect(() => {
-        console.log('сработали');
-        if(params.group && params.page)
-            fetchWords(params.page, params.group);
+        console.log(params);
+        if(params.group || params.page)
+            fetchWords(params.page || '0', params.group || '0', setWords);
         else { 
-        fetchWords('0','0');
-        history('/textbook/0/0');
-    }
+            // fetchWords('0','0');
+            // history('/textbook/0/0');
+        };
     }, [params]);
+
+    useEffect(() => {
+        if(checkLogin()) { 
+          setAuth(true);
+          fetchUserWords(setUserWords);
+    }
+        else setAuth(false);
+    }, [isAuth, params]);
+
 
     const onLeftClick = (page:number) => {
         const newPage = page - 1;
         history(`/textbook/${params.group}/${newPage}`);
     }
     const onRightClick = (page:number) => {
-        console.log(history);
         const newPage = page + 1;
-        console.log(page);
         history(`/textbook/${params.group}/${newPage}`);
     }
     return (
         <div>
-            <div className={styles.group__container}>
-                {groups.map(item => <Button onClick = {(item) => history(`/textbook/${item}/0`, {replace: true})} key={item} page={item} />)}
-            </div>
-                <Pagination 
+            <Navigation groups = {groups} isAuth = {isAuth} />
+            {children  ? '' : params.page ? <Pagination 
                 onLeftClick = {onLeftClick}
                 onRightClick = {onRightClick} 
-                page = {params.page?.toString()} />
-            <div className={styles.word_container}>
-                {words.map(word => <WordItem  data={word}  key={word.id}/>)}
-            </div>
-            
+                page = {params.page?.toString()} /> : ''}
+            {children? children :<WordList setUserWords = {setUserWords} userWords={userWords} data={words} isAuth = {isAuth} />}          
         </div>
     )
 }
