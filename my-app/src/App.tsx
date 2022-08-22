@@ -4,8 +4,9 @@ import Header from './MainPage/components/Header';
 import Footer from './MainPage/components/Footer';
 import styles from './MainPage/Page.module.css';
 import MainPage from './MainPage/MainPage';
-import AuthApp from './pages/authorization';
+
 import { Dictionary } from "./Etextbook/Components/Dictionary/Dictionary";
+import { AuthApp } from './AuthorizationA/AuthApp.tsx/AuthApp';
 
 function App() {
   return (
