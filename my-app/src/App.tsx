@@ -1,17 +1,25 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ETextBook from "./Etextbook/ETextBook";
+import Header from "./MainPage/components/Header";
+import Footer from "./MainPage/components/Footer";
+import styles from "./MainPage/Page.module.css"
+import MainPage from "./MainPage/MainPage";
 
 function App() {
   return (
-    <div>
-      
+    <div className={styles.wrapper}>      
     <BrowserRouter>
-          <Routes>
-            <Route path={'/textbook/:group/:page'} element = {<ETextBook />} />
-          </Routes>
-          <Routes>
-            <Route path={'/textbook/'} element = {<ETextBook />} />
-          </Routes>
+      <Header/>
+             <Routes>
+              <Route path={'/'} element = {<MainPage />} />
+            </Routes>
+            <Routes>
+              <Route path={'/textbook/:group/:page'} element = {<ETextBook />} />
+            </Routes>
+            <Routes>
+              <Route path={'/textbook/'} element = {<ETextBook />} />
+            </Routes>
+      <Footer/>     
     </BrowserRouter>
     </div>
   );
