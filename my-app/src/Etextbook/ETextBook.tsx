@@ -1,54 +1,14 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { checkLogin, getUserData } from "../util/playAudio";
-import Button from "./Components/Button";
+import { checkLogin, } from "../util/util";
 import { Navigation } from "./Components/Navigation";
 import Pagination from "./Components/Pagination";
-import WordItem from "./Components/WordList/WordItem";
 import { WordList } from "./Components/WordList/WordList";
-import styles from './Etextbook.module.css';
+import { ITextBookProps, IUserWord, IWord } from "./interfaces/interfaces";
+import { fetchUserWords, fetchWords } from "./service/service";
 
-export interface IWord {
-    id: string,
-    group: number,
-    page: number,
-    word: string,
-    image: string,
-    audio: string,
-    audioMeaning: string,
-    audioExample: string,
-    textMeaning: string,
-    textExample: string,
-    transcription: string,
-    wordTranslate: string,
-    textMeaningTranslate: string,
-    textExampleTranslate: string
-}
-export interface IUserWord {
-    id: string,
-    wordId: string,
-}
-export interface IWordListProps {
-    data: IWord[],
-    isAuth: boolean,
-    userWords: IUserWord[],
-    fetchUserWords: () => Promise<void>,
-}
-export interface IWordProps {
-    data: IWord,
-    isAuth: boolean,
-    userWords: IUserWord[],
-    fetchUserWords: () => Promise<void>,
-}
-export interface ITextBookParams {
-    group: string,
-    page: string,
-}
-interface ITextBookProps {
-    children?: React.ReactNode,
-}
+
 const ETextBook: React.FC<ITextBookProps> = ({children}) => {
     const [words, setWords] = useState<IWord[]>([]);
     const [userWords, setUserWords] = useState<IUserWord[]>([]);
@@ -57,29 +17,11 @@ const ETextBook: React.FC<ITextBookProps> = ({children}) => {
     const groups = [0,1,2,3,4,5];
     const [isAuth, setAuth] = useState(false);
 
-    async function fetchWords(page: string, group: string) {
-        const response = await axios.get<IWord[]>(`https://final-rslang-backend.herokuapp.com/words?page=${page}&group=${group}`);
-        setWords(response.data);
-    }
-    async function fetchUserWords() {
-        const data = getUserData();
-        const header = {
-            'Authorization': `Bearer ${data.token}`,
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        };
-        const response = await axios.request<IUserWord[]>({
-            method: 'get',
-            url: `https://final-rslang-backend.herokuapp.com/users/${data.id}/words`,
-            headers: header,
-        });
-        setUserWords(response.data);
-    }
     
     useEffect(() => {
         console.log(params);
         if(params.group || params.page)
-            fetchWords(params.page || '0', params.group || '0');
+            fetchWords(params.page || '0', params.group || '0', setWords);
         else { 
             // fetchWords('0','0');
             // history('/textbook/0/0');
@@ -89,7 +31,7 @@ const ETextBook: React.FC<ITextBookProps> = ({children}) => {
     useEffect(() => {
         if(checkLogin()) { 
           setAuth(true);
-          fetchUserWords();
+          fetchUserWords(setUserWords);
     }
         else setAuth(false);
     }, [isAuth, params]);
@@ -110,9 +52,7 @@ const ETextBook: React.FC<ITextBookProps> = ({children}) => {
                 onLeftClick = {onLeftClick}
                 onRightClick = {onRightClick} 
                 page = {params.page?.toString()} /> : ''}
-            {children? children :<WordList fetchUserWords = {fetchUserWords} userWords={userWords} data={words} isAuth = {isAuth} />}
-            
-            
+            {children? children :<WordList setUserWords = {setUserWords} userWords={userWords} data={words} isAuth = {isAuth} />}          
         </div>
     )
 }
