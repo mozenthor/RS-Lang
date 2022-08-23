@@ -19,6 +19,7 @@ export interface IWord {
 export interface IUserWord {
     id: string,
     wordId: string,
+    difficulty: string,
 }
 export interface IWordListProps {
     data: IWord[],
@@ -46,12 +47,12 @@ export interface IDictionaryItemProps {
 }
 
 export interface IButtonProps {
-    page:number,
-    onClick: (item: number) => void,
+    page:string,
+    onClick: (item: string) => void,
     children?: React.ReactNode
 }
 export interface INavigationProps {
-    groups: number[],
+    groups: string[],
     isAuth: boolean,
 }
 export interface IPaginationProps {

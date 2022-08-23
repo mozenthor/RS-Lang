@@ -28,16 +28,20 @@ export async function fetchUserWords(setUserWords: Dispatch<SetStateAction<IUser
     setUserWords(response.data);
 }
 
-export async function addWord(wordID:string) {
+export async function addWord(wordID:string, type: string) {
     const data = getUserData();
     const header = {
         'Authorization': `Bearer ${data.token}`,
         'Accept': 'application/json',
         'Content-Type': 'application/json'
     }
+    const body = {
+        difficulty: type,
+    };
     await axios({
         method: 'post',
         url: `https://final-rslang-backend.herokuapp.com/users/${data.id}/words/${wordID}`,
+        data: body,
         headers: header,
     })
 

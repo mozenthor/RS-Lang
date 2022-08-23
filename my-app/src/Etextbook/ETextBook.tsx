@@ -7,22 +7,24 @@ import Pagination from "./Components/Pagination";
 import { WordList } from "./Components/WordList/WordList";
 import { ITextBookProps, IUserWord, IWord } from "./interfaces/interfaces";
 import { fetchUserWords, fetchWords } from "./service/service";
-
+import styles from './Etextbook.module.css'
 
 const ETextBook: React.FC<ITextBookProps> = ({children}) => {
     const [words, setWords] = useState<IWord[]>([]);
     const [userWords, setUserWords] = useState<IUserWord[]>([]);
     const params = useParams<{group: string, page:string }>();
     const history = useNavigate();
-    const groups = [0,1,2,3,4,5];
+    const groups = ['0','1','2','3','4','5'];
     const [isAuth, setAuth] = useState(false);
+    const [activePage, setActivePage] = useState('0');
 
-    
     useEffect(() => {
-        console.log(params);
-        if(params.group || params.page)
+        if(params.group && params.page) {
             fetchWords(params.page || '0', params.group || '0', setWords);
+            setActivePage(`textbook__container_${params.group}`);
+        }
         else { 
+            setActivePage(`textbook__container_dictionary`);
             // fetchWords('0','0');
             // history('/textbook/0/0');
         };
@@ -36,7 +38,7 @@ const ETextBook: React.FC<ITextBookProps> = ({children}) => {
         else setAuth(false);
     }, [isAuth, params]);
 
-
+    
     const onLeftClick = (page:number) => {
         const newPage = page - 1;
         history(`/textbook/${params.group}/${newPage}`);
@@ -46,7 +48,7 @@ const ETextBook: React.FC<ITextBookProps> = ({children}) => {
         history(`/textbook/${params.group}/${newPage}`);
     }
     return (
-        <div>
+        <div className={styles.textbook__container + ' ' + styles[activePage] }>
             <Navigation groups = {groups} isAuth = {isAuth} />
             {children  ? '' : params.page ? <Pagination 
                 onLeftClick = {onLeftClick}

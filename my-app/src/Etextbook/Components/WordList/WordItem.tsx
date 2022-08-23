@@ -1,22 +1,31 @@
 import styles from '../../Etextbook.module.css';
 import { playAudio } from "../../../util/util";
 import { useEffect, useState } from "react";
-import { addWord, deleteWord, fetchUserWords } from "../../service/service";
+import { addWord, fetchUserWords } from "../../service/service";
 import { IWordProps, SERVER_URL } from '../../interfaces/interfaces';
 
 const WordItem: React.FC<IWordProps> = (props) => {
     const [isHard, setHard] = useState(false);
+    const [isLearned, setLearned] = useState(false);
+
     async function checkWord(wordId:string) {
-        if(props.userWords)
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-        props.userWords.filter((item) => item.wordId === wordId).length === 0 ? setHard(false) : setHard(true);
+        if (props.userWords) {
+          const wordArray = props.userWords.filter((item) => item.wordId === wordId);
+            if (wordArray.length === 0) {
+                setHard(false);
+                setLearned(false);
+            }
+            else {
+                const type = wordArray[0].difficulty;
+                if(type === 'hard') setHard(true);
+                if(type === 'learned') setLearned(true); }
+        }
     }
     useEffect(() => {
         checkWord(props.data.id);
     }, );
     const buttonOnClick = async () => {
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-        isHard ? await deleteWord(props.data.id) : await addWord(props.data.id);
+        await addWord(props.data.id, 'hard');
         setHard(!isHard);
         await fetchUserWords(props.setUserWords);
     }
