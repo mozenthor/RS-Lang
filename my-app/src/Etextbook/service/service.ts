@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Dispatch, SetStateAction } from "react";
 import { getUserData } from "../../util/util";
-import { Filters, FiltersFields, IAggregatedWords, IAggWord, IUserWord, IWord } from "../interfaces/interfaces";
+import { Filters, FiltersFields, IAddWordRequestBody, IAggregatedWords, IAggWord, IUserWord, IWord } from "../interfaces/interfaces";
 
 export async function fetchWords(page: string, group: string, setWords: Dispatch<SetStateAction<IWord[]>>) {
     const response = await axios.get<IWord[]>(`https://final-rslang-backend.herokuapp.com/words?page=${page}&group=${group}`);
@@ -51,8 +51,11 @@ export async function addWord(wordID:string, type: string) {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
     }
-    const body = {
+    const body: IAddWordRequestBody = {
         difficulty: type,
+        optional: {
+            date: new Date().toLocaleDateString(),
+        }
     };
     await axios({
         method: 'post',

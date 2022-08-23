@@ -97,5 +97,10 @@ export interface IAggWord {
         difficulty: string,
     }
 }
-
+export interface IAddWordRequestBody {
+    difficulty: string,
+    optional: {
+        date: string,
+    }
+}
 export const SERVER_URL = 'https://final-rslang-backend.herokuapp.com/';
