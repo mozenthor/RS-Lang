@@ -12,7 +12,7 @@ export const DictionaryItem: React.FC<IDictionaryItemProps> = (props) => {
             <p className={styles.item__text} dangerouslySetInnerHTML={{__html: props.data.textExample}}></p>
             <p className={styles.item__text} dangerouslySetInnerHTML={{__html: props.data.textExampleTranslate}}></p>
             <button className={styles.item__button} onClick={() => playAudio([props.data.audio, props.data.audioMeaning, props.data.audioExample])}>Аудио</button>
-            <button className={styles.item__button} onClick={() => props.updateArray(props.data.id)}> Удалить слово</button>
+            <button className={styles.item__button} onClick={() => props.updateArray(props.data._id)}> Удалить слово</button>
         </div>
     )
 }

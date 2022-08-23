@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Dispatch, SetStateAction } from "react";
 import { getUserData } from "../../util/util";
-import { IUserWord, IWord } from "../interfaces/interfaces";
+import { Filters, FiltersFields, IAggregatedWords, IAggWord, IUserWord, IWord } from "../interfaces/interfaces";
 
 export async function fetchWords(page: string, group: string, setWords: Dispatch<SetStateAction<IWord[]>>) {
     const response = await axios.get<IWord[]>(`https://final-rslang-backend.herokuapp.com/words?page=${page}&group=${group}`);
@@ -26,6 +26,22 @@ export async function fetchUserWords(setUserWords: Dispatch<SetStateAction<IUser
         headers: header,
     });
     setUserWords(response.data);
+}
+
+export async function fetchAggWords(setUserWords: Dispatch<SetStateAction<IAggWord[]>>, type:FiltersFields) {
+    const data = getUserData();
+    const header = {
+        'Authorization': `Bearer ${data.token}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    };
+    const response = await axios.request<IAggregatedWords[]>({
+        method: 'get',
+        url: `https://final-rslang-backend.herokuapp.com/users/${data.id}/aggregatedWords?wordsPerPage=500&filter=${Filters[type]}`,
+        headers: header,
+    });
+    console.log(response.data)
+    setUserWords(response.data[0].paginatedResults);
 }
 
 export async function addWord(wordID:string, type: string) {

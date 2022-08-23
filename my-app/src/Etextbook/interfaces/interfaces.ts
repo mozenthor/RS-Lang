@@ -24,14 +24,14 @@ export interface IUserWord {
 export interface IWordListProps {
     data: IWord[],
     isAuth: boolean,
-    userWords: IUserWord[],
-    setUserWords: Dispatch<SetStateAction<IUserWord[]>>,
+    userWords: IAggWord[],
+    setUserWords: Dispatch<SetStateAction<IAggWord[]>>,
 }
 export interface IWordProps {
     data: IWord,
     isAuth: boolean,
-    userWords?: IUserWord[],
-    setUserWords: Dispatch<SetStateAction<IUserWord[]>>,
+    userWords?: IAggWord[],
+    setUserWords: Dispatch<SetStateAction<IAggWord[]>>,
 }
 export interface ITextBookParams {
     group: string,
@@ -42,7 +42,7 @@ export interface ITextBookProps {
 }
 
 export interface IDictionaryItemProps {
-    data: IWord,
+    data: IAggWord,
     updateArray: (wordId:string) => Promise<void>,
 }
 
@@ -63,4 +63,39 @@ export interface IPaginationProps {
 export interface IDictionaryProps {
     groups: number[],
 }
+
+export interface IAggregatedWords {
+    paginatedResults: IAggWord[],
+    totalCount: [
+        {
+            count: number,
+        }
+    ]
+}
+export enum Filters {
+    all = '{"$or":[{"userWord.difficulty":"hard"},{"userWord.difficulty":"learned"}]}',
+    hard = '{"userWord.difficulty":"hard"}',
+    learned = '{"userWord.difficulty":"learned"}',
+}
+export type FiltersFields = 'all' | 'hard' | 'learned';
+export interface IAggWord {
+    _id: string,
+    group: number,
+    page: number,
+    word: string,
+    image: string,
+    audio: string,
+    audioMeaning: string,
+    audioExample: string,
+    textMeaning: string,
+    textExample: string,
+    transcription: string,
+    wordTranslate: string,
+    textMeaningTranslate: string,
+    textExampleTranslate: string,
+    userWord: {
+        difficulty: string,
+    }
+}
+
 export const SERVER_URL = 'https://final-rslang-backend.herokuapp.com/';

@@ -85,3 +85,6 @@
 .word_item_hard {
     background: lightcoral;
 }
+.word_item_learned {
+    background: greenyellow;
+}

@@ -5,13 +5,13 @@ import { checkLogin, } from "../util/util";
 import { Navigation } from "./Components/Navigation";
 import Pagination from "./Components/Pagination";
 import { WordList } from "./Components/WordList/WordList";
-import { ITextBookProps, IUserWord, IWord } from "./interfaces/interfaces";
-import { fetchUserWords, fetchWords } from "./service/service";
+import { Filters, IAggWord, ITextBookProps, IUserWord, IWord } from "./interfaces/interfaces";
+import { fetchAggWords, fetchUserWords, fetchWords } from "./service/service";
 import styles from './Etextbook.module.css'
 
 const ETextBook: React.FC<ITextBookProps> = ({children}) => {
     const [words, setWords] = useState<IWord[]>([]);
-    const [userWords, setUserWords] = useState<IUserWord[]>([]);
+    const [userWords, setUserWords] = useState<IAggWord[]>([]);
     const params = useParams<{group: string, page:string }>();
     const history = useNavigate();
     const groups = ['0','1','2','3','4','5'];
@@ -33,7 +33,7 @@ const ETextBook: React.FC<ITextBookProps> = ({children}) => {
     useEffect(() => {
         if(checkLogin()) { 
           setAuth(true);
-          fetchUserWords(setUserWords);
+          fetchAggWords(setUserWords, 'all');
     }
         else setAuth(false);
     }, [isAuth, params]);

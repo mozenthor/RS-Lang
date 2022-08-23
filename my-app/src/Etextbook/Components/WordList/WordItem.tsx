@@ -1,7 +1,7 @@
 import styles from '../../Etextbook.module.css';
 import { playAudio } from "../../../util/util";
 import { useEffect, useState } from "react";
-import { addWord, fetchUserWords } from "../../service/service";
+import { addWord, fetchAggWords} from "../../service/service";
 import { IWordProps, SERVER_URL } from '../../interfaces/interfaces';
 
 const WordItem: React.FC<IWordProps> = (props) => {
@@ -10,13 +10,13 @@ const WordItem: React.FC<IWordProps> = (props) => {
 
     async function checkWord(wordId:string) {
         if (props.userWords) {
-          const wordArray = props.userWords.filter((item) => item.wordId === wordId);
+          const wordArray = props.userWords.filter((item) => item._id === wordId);
             if (wordArray.length === 0) {
                 setHard(false);
                 setLearned(false);
             }
             else {
-                const type = wordArray[0].difficulty;
+                const type = wordArray[0].userWord.difficulty;
                 if(type === 'hard') setHard(true);
                 if(type === 'learned') setLearned(true); }
         }
@@ -24,13 +24,13 @@ const WordItem: React.FC<IWordProps> = (props) => {
     useEffect(() => {
         checkWord(props.data.id);
     }, );
-    const buttonOnClick = async () => {
-        await addWord(props.data.id, 'hard');
+    const buttonOnClick = async (type:string) => {
+        await addWord(props.data.id, type);
         setHard(!isHard);
-        await fetchUserWords(props.setUserWords);
+        await fetchAggWords(props.setUserWords, 'all');
     }
     return (
-    <div className={isHard ? styles.word_item + " " + styles.word_item_hard : styles.word_item}>
+    <div className={isHard ? styles.word_item + " " + styles.word_item_hard : isLearned ? styles.word_item + " " + styles.word_item_learned : styles.word_item }>
         <img className={styles.item__img} src={SERVER_URL + props.data.image} />
         <h2 className={styles.item__header} >{props.data.word} {props.data.transcription} — {props.data.wordTranslate}</h2>
         <p className={styles.item__text} dangerouslySetInnerHTML={{__html: props.data.textMeaning}}></p>
@@ -39,8 +39,11 @@ const WordItem: React.FC<IWordProps> = (props) => {
         <p className={styles.item__text} dangerouslySetInnerHTML={{__html: props.data.textExampleTranslate}}></p>
         <button className={styles.item__button} onClick={() => playAudio([props.data.audio, props.data.audioMeaning, props.data.audioExample])}>Аудио</button>
         {props.isAuth ? 
-        <button disabled = {isHard} className={styles.item__button} onClick={() => buttonOnClick()}>
+        <button disabled = {isHard || isLearned} className={styles.item__button} onClick={() => buttonOnClick('hard')}>
         Добавить в "сложные"</button> : ''}
+        {props.isAuth ? 
+        <button disabled = {isHard || isLearned} className={styles.item__button} onClick={() => buttonOnClick('learned')}>
+        Добавить в "изученные"</button> : ''}
     </div>
     )
 
