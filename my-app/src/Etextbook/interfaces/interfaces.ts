@@ -101,6 +101,7 @@ export interface IAddWordRequestBody {
     difficulty: string,
     optional: {
         date: string,
+        isMarked: boolean
     }
 }
 export const SERVER_URL = 'https://final-rslang-backend.herokuapp.com/';

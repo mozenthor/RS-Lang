@@ -28,19 +28,26 @@ export async function fetchUserWords(setUserWords: Dispatch<SetStateAction<IUser
     setUserWords(response.data);
 }
 
-export async function fetchAggWords(setUserWords: Dispatch<SetStateAction<IAggWord[]>>, type:FiltersFields) {
+export async function fetchAggWords(setUserWords: Dispatch<SetStateAction<IAggWord[]>>, type:FiltersFields, group?: string, page?: string) {
     const data = getUserData();
+    let groupFilter = '';
+    let filter = Filters[type] as string;
     const header = {
         'Authorization': `Bearer ${data.token}`,
         'Accept': 'application/json',
         'Content-Type': 'application/json'
     };
+    if(group && page) {
+        groupFilter = `group=${group}&page=0&`;
+        // filter = `{"$and":[{"$or":[{"userWord.difficulty":"hard", "userWord.difficulty":"learned"}]},{"page":${page}}]}`
+        filter = `{"$and":[{"page":${page}, "userWord.optional.isMarked":true}]}`;
+    }
     const response = await axios.request<IAggregatedWords[]>({
         method: 'get',
-        url: `https://final-rslang-backend.herokuapp.com/users/${data.id}/aggregatedWords?wordsPerPage=500&filter=${Filters[type]}`,
+        url: `https://final-rslang-backend.herokuapp.com/users/${data.id}/aggregatedWords?wordsPerPage=500&${groupFilter}filter=${filter}`,
         headers: header,
     });
-    console.log(response.data)
+    console.log(response.data[0].paginatedResults);
     setUserWords(response.data[0].paginatedResults);
 }
 
@@ -55,6 +62,7 @@ export async function addWord(wordID:string, type: string) {
         difficulty: type,
         optional: {
             date: new Date().toLocaleDateString(),
+            isMarked: true,
         }
     };
     await axios({

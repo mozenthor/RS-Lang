@@ -27,7 +27,7 @@ const WordItem: React.FC<IWordProps> = (props) => {
     const buttonOnClick = async (type:string) => {
         await addWord(props.data.id, type);
         setHard(!isHard);
-        await fetchAggWords(props.setUserWords, 'all');
+        await fetchAggWords(props.setUserWords, 'all', props.data.group.toString(), props.data.page.toString());
     }
     return (
     <div className={isHard ? styles.word_item + " " + styles.word_item_hard : isLearned ? styles.word_item + " " + styles.word_item_learned : styles.word_item }>

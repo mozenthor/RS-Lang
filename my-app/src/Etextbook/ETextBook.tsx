@@ -8,6 +8,7 @@ import { WordList } from "./Components/WordList/WordList";
 import { Filters, IAggWord, ITextBookProps, IUserWord, IWord } from "./interfaces/interfaces";
 import { fetchAggWords, fetchUserWords, fetchWords } from "./service/service";
 import styles from './Etextbook.module.css'
+import { Games } from "./Components/Games/Games";
 
 const ETextBook: React.FC<ITextBookProps> = ({children}) => {
     const [words, setWords] = useState<IWord[]>([]);
@@ -17,6 +18,12 @@ const ETextBook: React.FC<ITextBookProps> = ({children}) => {
     const groups = ['0','1','2','3','4','5'];
     const [isAuth, setAuth] = useState(false);
     const [activePage, setActivePage] = useState('0');
+    const [progress, setProgress] = useState(0);
+
+    const changePercentage = () => {
+        const result = userWords.filter(item => item.userWord.difficulty === 'learned').length / words.length;
+        setProgress(result * 100);
+    }
 
     useEffect(() => {
         if(params.group && params.page) {
@@ -33,12 +40,15 @@ const ETextBook: React.FC<ITextBookProps> = ({children}) => {
     useEffect(() => {
         if(checkLogin()) { 
           setAuth(true);
-          fetchAggWords(setUserWords, 'all');
+          fetchAggWords(setUserWords, 'all', params.group, params.page);
     }
         else setAuth(false);
     }, [isAuth, params]);
 
-    
+    useEffect(() => {
+        changePercentage();
+    },[words, userWords])
+
     const onLeftClick = (page:number) => {
         const newPage = page - 1;
         history(`/textbook/${params.group}/${newPage}`);
@@ -54,7 +64,9 @@ const ETextBook: React.FC<ITextBookProps> = ({children}) => {
                 onLeftClick = {onLeftClick}
                 onRightClick = {onRightClick} 
                 page = {params.page?.toString()} /> : ''}
-            {children? children :<WordList setUserWords = {setUserWords} userWords={userWords} data={words} isAuth = {isAuth} />}          
+            {children ? '' : isAuth && params.group ? <span>Страница изучена на {progress}%</span> : ''}
+            {children? children :<WordList setUserWords = {setUserWords} userWords={userWords} data={words} isAuth = {isAuth} />}
+            {children ? '' : isAuth && params.group ? <Games percentage={progress} /> : ''}          
         </div>
     )
 }

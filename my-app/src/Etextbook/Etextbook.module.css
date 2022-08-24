@@ -76,7 +76,7 @@
     display: flex;
     width:30%;
     justify-content: space-between;
-    margin-bottom: 30px;
+    margin:30px;
 }
 .item__button:disabled {
     background: gray;
