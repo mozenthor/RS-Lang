@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { IAggWord, IStats, IUserData } from "../interfaces/interfaces";
 import { fetchAggWords, getStats } from "../service/service";
 import { getUserData } from "../util/util";
+import { Graphs } from "./components/Graphs";
 import { TodayInfo } from "./components/TodayInfo";
 import { UserInfo } from "./components/UserInfo";
 import { calculateLearnedWords } from "./util/statsUtil";
@@ -55,5 +56,6 @@ export const Stats: React.FC = () => {
     return (<div>
         <UserInfo count={learnedWords} name={userInfo.name}/>
         <TodayInfo stats={gameStats}  userWords={userWords}/>
+        <Graphs words={userWords}/>
     </div>)
 }

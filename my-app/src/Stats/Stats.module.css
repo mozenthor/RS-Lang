@@ -8,3 +8,15 @@
 .user_subheader {
     text-align: center;
 }
+.today__words {
+    width:50%;
+    margin:40px auto;
+}
+.today__words__header {
+    text-align: center;
+}
+.today__games__container {
+    display: flex;
+    justify-content: center;
+    column-gap: 75px;
+}
