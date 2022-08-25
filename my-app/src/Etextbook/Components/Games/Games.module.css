@@ -34,10 +34,12 @@
     color: white;
     background-color: #1abc9c;
     text-decoration: none;
+    cursor: pointer;
 }
 .tile__button:disabled {
     background: lightslategray;
     color:lightgoldenrodyellow;
+    cursor: default;
 }
 .tile__container {
     width:50%;
