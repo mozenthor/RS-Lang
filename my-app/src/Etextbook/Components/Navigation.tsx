@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import styles from '../Etextbook.module.css';
-import { INavigationProps } from '../interfaces/interfaces';
+import { INavigationProps } from '../../interfaces/interfaces';
 import Button from './Button';
 
 

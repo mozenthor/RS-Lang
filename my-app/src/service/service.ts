@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Dispatch, SetStateAction } from "react";
-import { getUserData } from "../../util/util";
-import { Filters, FiltersFields, IAddWordRequestBody, IAggregatedWords, IAggWord, IUserWord, IWord } from "../interfaces/interfaces";
+import { getToday, getUserData } from "../util/util";
+import { Filters, FiltersFields, IAddWordRequestBody, IAggregatedWords, IAggWord, IStats, IUserWord, IWord } from "../interfaces/interfaces";
 
 export async function fetchWords(page: string, group: string, setWords: Dispatch<SetStateAction<IWord[]>>) {
     const response = await axios.get<IWord[]>(`https://final-rslang-backend.herokuapp.com/words?page=${page}&group=${group}`);
@@ -47,11 +47,10 @@ export async function fetchAggWords(setUserWords: Dispatch<SetStateAction<IAggWo
         url: `https://final-rslang-backend.herokuapp.com/users/${data.id}/aggregatedWords?wordsPerPage=500&${groupFilter}filter=${filter}`,
         headers: header,
     });
-    console.log(response.data[0].paginatedResults);
     setUserWords(response.data[0].paginatedResults);
 }
 
-export async function addWord(wordID:string, type: string) {
+export async function addWord(wordID:string, type: string, source: string) {
     const data = getUserData();
     const header = {
         'Authorization': `Bearer ${data.token}`,
@@ -61,8 +60,9 @@ export async function addWord(wordID:string, type: string) {
     const body: IAddWordRequestBody = {
         difficulty: type,
         optional: {
-            date: new Date().toLocaleDateString(),
+            date: getToday(),
             isMarked: true,
+            source: source
         }
     };
     await axios({
@@ -107,4 +107,19 @@ export async function fetchUserJoinedWords(setUserWords: Dispatch<SetStateAction
         result.push(item);
     }
     setUserWords(result);
+}
+
+export async function getStats(setGameStats:Dispatch<SetStateAction<IStats>>) {
+    const data = getUserData();
+    const header = {
+        'Authorization': `Bearer ${data.token}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    };
+    const response = await axios.request<IStats>({
+        method: 'get',
+        url: `https://final-rslang-backend.herokuapp.com/users/${data.id}/statistics`,
+        headers: header,
+    });
+   setGameStats(response.data);
 }

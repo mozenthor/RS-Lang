@@ -1,8 +1,8 @@
 import styles from '../../Etextbook.module.css';
 import { playAudio } from "../../../util/util";
 import { useEffect, useState } from "react";
-import { addWord, fetchAggWords} from "../../service/service";
-import { IWordProps, SERVER_URL } from '../../interfaces/interfaces';
+import { addWord, fetchAggWords} from "../../../service/service";
+import { IWordProps, SERVER_URL } from '../../../interfaces/interfaces';
 
 const WordItem: React.FC<IWordProps> = (props) => {
     const [isHard, setHard] = useState(false);
@@ -25,7 +25,7 @@ const WordItem: React.FC<IWordProps> = (props) => {
         checkWord(props.data.id);
     }, );
     const buttonOnClick = async (type:string) => {
-        await addWord(props.data.id, type);
+        await addWord(props.data.id, type, 'Учебник');
         setHard(!isHard);
         await fetchAggWords(props.setUserWords, 'all', props.data.group.toString(), props.data.page.toString());
     }

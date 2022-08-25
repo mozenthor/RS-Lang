@@ -18,7 +18,16 @@ export const checkLogin = () => {
 
 export const getUserData = () => {
     return {
-        token: localStorage.getItem('token'),
-        id: localStorage.getItem('userId'),
+        name: localStorage.getItem('userName') || '',
+        token: localStorage.getItem('token') || '',
+        id: localStorage.getItem('userId') || '',
     }
+}
+
+export const getToday = () => {
+    const date = new Date();
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    return `${day}.${month}.${year}`;
 }

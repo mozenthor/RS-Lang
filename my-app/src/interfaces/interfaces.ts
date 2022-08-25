@@ -95,13 +95,54 @@ export interface IAggWord {
     textExampleTranslate: string,
     userWord: {
         difficulty: string,
+        optional: {
+            date: string,
+            isMarket: boolean
+        }
     }
 }
 export interface IAddWordRequestBody {
     difficulty: string,
     optional: {
         date: string,
-        isMarked: boolean
+        isMarked: boolean,
+        source: string
     }
 }
+
+export interface IUserData {
+    name: string,
+    id: string,
+    token: string,
+}
+export interface IUserStatsProps {
+    count: number,
+    name: string,
+}
+
+export interface ITodayInfoProps {
+    userWords: IAggWord[],
+    stats:IStats,
+}
+
+export interface IGameStatProps {
+    name: string;
+    stats: IStats,
+}
+
+export interface GameStatFields {
+    attempts: number,
+    correctAnswers: number,
+    wrongAnswers: number,
+    bestSeries: number,
+}
+export interface IStats {
+    learnedWords: number,
+    optional: {
+        date: string,
+        audiocall: GameStatFields, 
+        sprint: GameStatFields,
+    }
+}
+
 export const SERVER_URL = 'https://final-rslang-backend.herokuapp.com/';

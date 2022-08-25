@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import styles from '../Etextbook.module.css';
-import { IButtonProps } from '../interfaces/interfaces';
+import { IButtonProps } from '../../interfaces/interfaces';
 
 
 const Button: React.FC<IButtonProps> = (props) => {

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
-import { deleteWord, fetchAggWords, fetchUserJoinedWords} from "../../service/service";
+import { deleteWord, fetchAggWords, fetchUserJoinedWords} from "../../../service/service";
 import styles from "../../Etextbook.module.css"
 import { DictionaryItem } from "./DictionaryItem";
-import { IAggWord, IWord } from "../../interfaces/interfaces";
+import { IAggWord, IWord } from "../../../interfaces/interfaces";
 
 const HARD_WORDS = '';
 

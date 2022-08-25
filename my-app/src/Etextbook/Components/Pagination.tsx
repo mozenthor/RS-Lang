@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { IPaginationProps } from "../interfaces/interfaces";
+import { IPaginationProps } from "../../interfaces/interfaces";
 
 
 const Pagination: React.FC<IPaginationProps> = ({page, onLeftClick,  onRightClick}) => {

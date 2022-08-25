@@ -5,8 +5,8 @@ import { checkLogin, } from "../util/util";
 import { Navigation } from "./Components/Navigation";
 import Pagination from "./Components/Pagination";
 import { WordList } from "./Components/WordList/WordList";
-import { Filters, IAggWord, ITextBookProps, IUserWord, IWord } from "./interfaces/interfaces";
-import { fetchAggWords, fetchUserWords, fetchWords } from "./service/service";
+import { IAggWord, ITextBookProps, IWord } from "../interfaces/interfaces";
+import { fetchAggWords, fetchWords } from "../service/service";
 import styles from './Etextbook.module.css'
 import { Games } from "./Components/Games/Games";
 

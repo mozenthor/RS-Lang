@@ -1,6 +1,6 @@
 import { playAudio } from "../../../util/util";
 import styles from "../../Etextbook.module.css"
-import { IDictionaryItemProps, SERVER_URL } from "../../interfaces/interfaces";
+import { IDictionaryItemProps, SERVER_URL } from "../../../interfaces/interfaces";
 
 export const DictionaryItem: React.FC<IDictionaryItemProps> = (props) => {
     return (
