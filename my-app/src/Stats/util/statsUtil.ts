@@ -20,10 +20,31 @@ export const calculateTotalWinRate = (stats:IStats) => {
     return totalCorrect/(totalAudiocall + totalSprint) *100;
 }
 export const getWordsStatsByDay = (words: IAggWord[]) => {
-    const datesArray = new Set(words.map(item => item.userWord.optional.date));
-    console.log();
+    const datesArray = Array.from(new Set(words.map(item => item.userWord.optional.date))).sort();
+    const wordsByDayArray:[string, number][] = []; 
+    for(let i = 0; i < datesArray.length; i++ ) {
+        let counter = 0;
+        for(let j = 0; j < words.length; j++) {
+            if(datesArray[i] === words[j].userWord.optional.date)
+            counter +=1;
+        }
+        wordsByDayArray.push([datesArray[i], counter]);
+    }
+    return wordsByDayArray;
 }
 export const getUniqueDays = (words: IAggWord[]) => {
     const datesArray = new Set(words.map(item => item.userWord.optional.date));
     return Array.from(datesArray).sort();
+}
+
+export const getAcumByDays = (words: IAggWord[]) => {
+    const wordsByDay = getWordsStatsByDay(words);
+    for(let i = 1; i<wordsByDay.length; i++) {
+        wordsByDay[i][1] += wordsByDay[i-1][1];
+    }
+    return wordsByDay;
+    // console.log(wordsByDay.reduce((acum, next) => {
+    //     acum = acum + next[1];
+    //     return acum;
+    // },0))
 }

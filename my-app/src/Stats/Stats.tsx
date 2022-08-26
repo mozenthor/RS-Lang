@@ -3,6 +3,7 @@ import { IAggWord, IStats, IUserData } from "../interfaces/interfaces";
 import { fetchAggWords, getStats } from "../service/service";
 import { getUserData } from "../util/util";
 import { Graphs } from "./components/Graphs";
+import { StatsMenu } from "./components/StatsMenu";
 import { TodayInfo } from "./components/TodayInfo";
 import { UserInfo } from "./components/UserInfo";
 import { calculateLearnedWords } from "./util/statsUtil";
@@ -25,7 +26,7 @@ const defaultStat = {
     }
   }
 export const Stats: React.FC = () => {
-
+    const [page, setPage] = useState('');
     const [userWords, setUserWords] = useState<IAggWord[]>([]);
     const [learnedWords, setLearnedWords] = useState(0);
     const [gameStats, setGameStats] = useState<IStats>(defaultStat);
@@ -54,8 +55,9 @@ export const Stats: React.FC = () => {
 
 
     return (<div>
-        <UserInfo count={learnedWords} name={userInfo.name}/>
-        <TodayInfo stats={gameStats}  userWords={userWords}/>
-        <Graphs words={userWords}/>
+        <StatsMenu page={page} changePage= {setPage} />
+        {page === 'today' ? <TodayInfo stats={gameStats}  userWords={userWords}/> : ''}
+        {page === 'total' ? <UserInfo count={learnedWords} name={userInfo.name}/> : ''}
+        {page === 'total' ? <Graphs words={userWords}/> : ''}
     </div>)
 }
