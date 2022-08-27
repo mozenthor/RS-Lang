@@ -76,7 +76,8 @@ export class Store {
       const userId = localStorage.getItem('userid') as string;
       const refreshToken = localStorage.getItem('token') as string;
       const response = await authService.getNewToken(userId, refreshToken);
-      localStorage.setItem('token', response.data.refreshToken);
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('refreshToken', response.data.refreshToken);
     }
     catch(error) {
       console.log(error);
