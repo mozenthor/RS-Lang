@@ -1,8 +1,7 @@
+import "./authStyle.css"
 import { createContext } from "react";
-import { LoginForm } from "../components/loginForm";
-import { Logout } from "../components/logout";
-import { RegistrationForm } from "../components/RegistratonForm";
 import { Store} from "../store/store";
+import AuthForm from "./AuthForm";
 
 export const store = new Store();
 
@@ -19,9 +18,8 @@ export const AuthApp = () => {
     <Context.Provider value={{
       store
       }}>
-        <RegistrationForm></RegistrationForm>
-        <LoginForm></LoginForm>
-        <Logout></Logout>
+        <AuthForm/>
     </Context.Provider>
   )
 }
+
