@@ -9,6 +9,7 @@ import { Dictionary } from "./Etextbook/Components/Dictionary/Dictionary";
 import { AuthApp } from './AuthorizationA/AuthApp.tsx/AuthApp';
 import { Stats } from './Stats/Stats';
 
+
 function App() {
   return (
     <div className={styles.wrapper}>
