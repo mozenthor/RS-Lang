@@ -11,6 +11,14 @@ class AuthService {
     return api.post('/users', {name, email, password})
   }
 
+  async getNewToken(userId: string, refreshToken: string) {
+    return api.get(`/users/${userId}/tokens`, {
+      headers: {
+        'Authorization': `Bearer ${refreshToken}`,
+      }
+    })
+  }
+
 }
 
 export const authService = new AuthService;

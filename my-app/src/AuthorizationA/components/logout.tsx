@@ -1,12 +1,18 @@
-import { FC } from "react"
-import { store } from "../AuthApp.tsx/AuthApp"
+import { observer } from "mobx-react-lite";
+import { FC, useContext } from "react"
+import { Context } from "../AuthApp.tsx/AuthApp"
 
-export const Logout: FC = () => {
-
+const Logout: FC = () => {
+  const {store} = useContext(Context);
+  
   return (
-    <button onClick={() => store.logout()}>
+    <button
+    className={'auth_button'}
+    onClick={() => store.logout()}>
         Выйти
     </button>
 
   )
 }
+
+export default observer(Logout);
