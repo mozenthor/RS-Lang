@@ -64,7 +64,7 @@ const ETextBook: React.FC<ITextBookProps> = ({children}) => {
                 onLeftClick = {onLeftClick}
                 onRightClick = {onRightClick} 
                 page = {params.page?.toString()} /> : ''}
-            {children ? '' : isAuth && params.group ? <span>Страница изучена на {progress}%</span> : ''}
+            {children ? '' : isAuth && params.group ? <span>Страница изучена на {progress || 0}%</span> : ''}
             {children? children :<WordList setUserWords = {setUserWords} userWords={userWords} data={words} isAuth = {isAuth} />}
             {children ? '' : isAuth && params.group ? <Games percentage={progress} /> : ''}          
         </div>

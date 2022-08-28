@@ -107,7 +107,8 @@ export interface IAggWord {
         difficulty: string,
         optional: {
             date: string,
-            isMarket: boolean
+            isMarked: boolean,
+            source: string
         }
     }
 }
@@ -145,6 +146,7 @@ export enum RusGameNames {
 export interface IGameStatProps {
     name: GameNames;
     stats: IStats,
+    count: number,
 }
 
 export interface GameStatFields {

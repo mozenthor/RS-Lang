@@ -48,3 +48,16 @@ export const getAcumByDays = (words: IAggWord[]) => {
     //     return acum;
     // },0))
 }
+export const getWordsByDay = (words: IAggWord[], date: string) => {
+    return words.filter(item => item.userWord.optional.date === date);
+}
+export const getWordsBySource = (words: IAggWord[], source: string, date?: string) => {
+    const wordsArray = date ? getWordsByDay(words, date) : words;
+    let counter = 0;
+    for(let i = 0; i < wordsArray.length; i++) {
+        if(wordsArray[i].userWord.optional.source === source) {
+            counter++;
+        }
+    }
+    return counter;
+}
