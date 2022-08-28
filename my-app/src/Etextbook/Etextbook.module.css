@@ -1,9 +1,31 @@
+.textbook__container {
+    background: seagreen;
+}
+.textbook__container_0 {
+    background: lightgreen;
+}
+.textbook__container_1 {
+    background: lightpink;
+}
+.textbook__container_2 {
+    background: lightseagreen
+}
+.textbook__container_3 {
+    background: lightgoldenrodyellow;
+}
+.textbook__container_4 {
+    background: lightcyan;
+}
+.textbook__container_5 {
+    background: lightseagreen;
+}
 .word_container {
+    padding: 3%;
     margin-top: 40px;
     display: flex;
     flex-wrap: wrap;
-    column-gap: 60px;
-    row-gap: 15px;
+    column-gap: 12.25%;
+    row-gap: 25px;
 }
 .word_item {
     border:1px solid black;
@@ -47,11 +69,14 @@
     border: none;
     border-radius: 25px;
 }
+.group__button_active {
+    background: lightgreen;
+}
 .group__container {
     display: flex;
     width:30%;
     justify-content: space-between;
-    margin-bottom: 30px;
+    margin:30px;
 }
 .item__button:disabled {
     background: gray;
@@ -59,4 +84,7 @@
 }
 .word_item_hard {
     background: lightcoral;
+}
+.word_item_learned {
+    background: greenyellow;
 }

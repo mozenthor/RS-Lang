@@ -1,0 +1,41 @@
+.user_info {
+    width:30%;
+    margin: auto;
+}
+.user_header {
+    text-align: center;
+}
+.user_subheader {
+    text-align: center;
+}
+.today__words {
+    width:50%;
+    margin:40px auto;
+}
+.today__words__header {
+    text-align: center;
+}
+.today__games__container {
+    display: flex;
+    justify-content: center;
+    column-gap: 75px;
+}
+.menu {
+    display: flex;
+    justify-content: center;
+    column-gap: 75px;
+}
+.menu__button {
+    outline: none;
+    border: 0;
+    background: #34495e;
+    color:white;
+    font-weight: bold;
+    padding:15px;
+}
+.menu__button_active {
+    background: #1abc9c;
+}
+.graph__container {
+    height:692px;
+}

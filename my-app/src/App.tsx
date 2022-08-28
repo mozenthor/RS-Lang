@@ -7,6 +7,8 @@ import MainPage from './MainPage/MainPage';
 
 import { Dictionary } from "./Etextbook/Components/Dictionary/Dictionary";
 import { AuthApp } from './AuthorizationA/AuthApp.tsx/AuthApp';
+import { Stats } from './Stats/Stats';
+
 
 function App() {
   return (
@@ -27,6 +29,9 @@ function App() {
         </Routes>
         <Routes>
             <Route path={'/textbook/dictionary'} element = {<ETextBook> <Dictionary /> </ETextBook>} />
+        </Routes>
+        <Routes>
+            <Route path={'/stats'} element = {<Stats />} />
         </Routes>
         <Footer />
       </BrowserRouter>

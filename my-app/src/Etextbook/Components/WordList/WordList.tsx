@@ -1,6 +1,6 @@
 import WordItem from "./WordItem"
 import styles from "../../Etextbook.module.css";
-import { IWordListProps } from "../../interfaces/interfaces";
+import { IWordListProps } from "../../../interfaces/interfaces";
 
  
 export const WordList: React.FC<IWordListProps> = (props) => {
