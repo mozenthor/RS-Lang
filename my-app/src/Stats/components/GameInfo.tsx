@@ -6,7 +6,6 @@ export const GameInfo:React.FC<IGameStatProps> = (props) => {
     useEffect(() => {
         const rate = props.stats.optional[props.name].correctAnswers / (props.stats.optional[props.name].correctAnswers + props.stats.optional[props.name].wrongAnswers);
         setWinRate(rate*100);
-        console.log(props.stats);
     }, [props.stats])
     return(<div>
         <h3>{RusGameNames[props.name]}</h3>

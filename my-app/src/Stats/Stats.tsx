@@ -48,7 +48,6 @@ export const Stats: React.FC = () => {
     },[]);
 
     useEffect(() => {
-        console.log(userWords);
         const count = calculateLearnedWords(userWords);
         setLearnedWords(count);
     }, [userWords, gameStats]);

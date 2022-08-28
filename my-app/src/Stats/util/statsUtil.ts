@@ -61,3 +61,13 @@ export const getWordsBySource = (words: IAggWord[], source: string, date?: strin
     }
     return counter;
 }
+export const getCountsBySorce = (words: IAggWord[]) => {
+    const sourceCount: [string, number][] = [['Учебник', 0], ['Аудиовызов', 0], ['Спринт', 0]];
+    for(let i = 0; i< sourceCount.length; i++ ) {
+        for(let j=0; j<words.length; j++) {
+            if(sourceCount[i][0] === words[j].userWord.optional.source)
+                sourceCount[i][1] += 1;
+        }
+    }
+    return sourceCount;
+}

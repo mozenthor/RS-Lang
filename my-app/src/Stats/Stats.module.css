@@ -36,3 +36,6 @@
 .menu__button_active {
     background: #1abc9c;
 }
+.graph__container {
+    height:692px;
+}
