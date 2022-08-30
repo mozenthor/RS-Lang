@@ -22,7 +22,7 @@ const DropDownList = (props: dropDownPropsProps) => {
         </Link>
       </li>
       <li className={styles.dropdown__item}>
-        <Link className={styles.dropdown__link} to="/textbook">
+        <Link className={styles.dropdown__link} to="/stats">
           Статистика
         </Link>
       </li>

@@ -87,14 +87,22 @@ export const Graphs: React.FC<IGraphProps> = (props) => {
     }, [props, activeChart]);
     return(
         <div>
-            <h3>Графики</h3>
-            <button onClick={() => setActiveChart('line')}>Количество слов по дням</button>
-            <button onClick={() => setActiveChart('bar')}>Увеличение слов по дням</button>
-            <button onClick={() => setActiveChart('pie')}>Статистика по способам изучения</button>
-            <div className={styles.graph__container}>
+            <h3 className={styles.graphs__header}>Графики</h3>
+            <div className={styles.graphs__menu}>
+                <button 
+                className={activeChart ==='line' ? styles.graphs__button + ' ' + styles.graphs__button_active : styles.graphs__button} 
+                onClick={() => setActiveChart('line')}>Количество слов по дням</button>
+                <button 
+                className={activeChart ==='pie' ? styles.graphs__button + ' ' + styles.graphs__button_active : styles.graphs__button} 
+                onClick={() => setActiveChart('pie')}>Статистика по способам изучения</button>
+                <button 
+                className={activeChart ==='bar' ? styles.graphs__button + ' ' + styles.graphs__button_active : styles.graphs__button}  
+                onClick={() => setActiveChart('bar')}>Увеличение слов по дням</button>
+            </div>
+            <div className={styles.graphs__container}>
                 {activeChart === 'line' ? <Line options={options} data={lineChartData} />  : ''}
                 {activeChart === 'bar' ? <Bar options={options} data={barChartData} /> : ''}
-                {activeChart === 'pie' ? <Pie data={pieChartData} options={{ maintainAspectRatio: false }} width= {500} height = {500}/> : ''}
+                {activeChart === 'pie' ? <Pie data={pieChartData} options={{ maintainAspectRatio: false }} width= {692} height = {692}/> : ''}
             </div>
         </div>
     )

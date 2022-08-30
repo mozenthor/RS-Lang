@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { IPaginationProps } from "../../interfaces/interfaces";
-
+import styles from '../Etextbook.module.css';
 
 const Pagination: React.FC<IPaginationProps> = ({page, onLeftClick,  onRightClick}) => {
     const [isLeftDisabled, setLeftDisable] = useState(true);
@@ -13,9 +13,9 @@ const Pagination: React.FC<IPaginationProps> = ({page, onLeftClick,  onRightClic
         if(pageNumber > 0) setLeftDisable(false);
     })
     return (
-        <div>
-            <button onClick={() => onLeftClick(Number(page))} disabled={isLeftDisabled}>Пред</button>
-            <button onClick={() => onRightClick(Number(page)) } disabled={isRightDisabled}>След</button>
+        <div className={styles.pagination__container}>
+            <button onClick={() => onLeftClick(Number(page))} className={styles.pagination__button} disabled={isLeftDisabled}>Пред</button>
+            <button onClick={() => onRightClick(Number(page)) } className={styles.pagination__button} disabled={isRightDisabled}>След</button>
             <span>Страница № {page ? page : 0}</span>
         </div>
     )

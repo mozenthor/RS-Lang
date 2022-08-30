@@ -1,5 +1,6 @@
 .textbook__container {
     background: seagreen;
+    min-height: 100vh;
 }
 .textbook__container_0 {
     background: lightgreen;
@@ -30,6 +31,8 @@
 .word_item {
     border:1px solid black;
     border-radius: 15px;
+    display: flex;
+    flex-direction: column;
 }
 .item__header {
     margin: auto;
@@ -52,6 +55,19 @@
     margin: auto;
     cursor: pointer;
     margin-top: auto;
+    width: 190px;
+    margin-bottom: 5px;
+}
+.item__button_audio {
+    background-image: url('../Etextbook/assets/Speaker_Icon.svg');
+    background-size: 20px;
+    background-color: transparent;
+    border: none;
+    width:20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    display: block;
+    margin: auto;
 }
 .item__text {
     width:300px;
@@ -64,7 +80,7 @@
 .group__button {
     cursor: pointer;
     width:100%;
-    height: 40px;
+    height: 45px;
     outline: none;
     border: none;
     border-radius: 25px;
@@ -74,8 +90,9 @@
 }
 .group__container {
     display: flex;
-    width:30%;
+    width:60%;
     justify-content: space-between;
+    column-gap: 15px;
     margin:30px;
 }
 .item__button:disabled {
@@ -89,7 +106,34 @@
     background: greenyellow;
 }
 .item__message {
-    width:300px;
+    padding: 5px;
+    width:290px;
     margin: auto;
     text-align: center;
+    background: #34495e;
+    color:white;
+    border-radius: 10px;
+    margin-bottom: 5px;
+}
+.pagination__button {
+    border: none;
+    background: #34495e;
+    color:#FFFFFF;
+    font-weight: bolder;
+    width:75px;
+    padding:5px;
+    margin-right:30px;
+}
+.pagination__button:disabled {
+    background: gray;
+    color:lightgray;
+}
+.pagination__container {
+    margin-left:30px;
+}
+.textbook__progress {
+    margin:15px 30px;
+}
+.dictionary__header {
+    margin-left: 30px;
 }

@@ -7,6 +7,7 @@ import { StatsMenu } from "./components/StatsMenu";
 import { TodayInfo } from "./components/TodayInfo";
 import { UserInfo } from "./components/UserInfo";
 import { calculateLearnedWords } from "./util/statsUtil";
+import styles from './Stats.module.css'
 const defaultStat = {
     learnedWords: 0,
     optional: {
@@ -53,7 +54,7 @@ export const Stats: React.FC = () => {
     }, [userWords, gameStats]);
 
 
-    return (<div>
+    return (<div className={styles.container}>
         <StatsMenu page={page} changePage= {setPage} />
         {page === 'today' ? <TodayInfo stats={gameStats}  userWords={userWords}/> : ''}
         {page === 'total' ? <UserInfo count={learnedWords} name={userInfo.name}/> : ''}

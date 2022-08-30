@@ -9,6 +9,7 @@ import { IAggWord, ITextBookProps, IWord } from "../interfaces/interfaces";
 import { fetchAggWords, fetchWords } from "../service/service";
 import styles from './Etextbook.module.css'
 import { Games } from "./Components/Games/Games";
+import { ProgressInfo } from "./Components/ProgressInfo";
 
 const ETextBook: React.FC<ITextBookProps> = ({children}) => {
     const [words, setWords] = useState<IWord[]>([]);
@@ -64,7 +65,7 @@ const ETextBook: React.FC<ITextBookProps> = ({children}) => {
                 onLeftClick = {onLeftClick}
                 onRightClick = {onRightClick} 
                 page = {params.page?.toString()} /> : ''}
-            {children ? '' : isAuth && params.group ? <span>Страница изучена на {progress || 0}%</span> : ''}
+            {children ? '' : isAuth && params.group ? <ProgressInfo progress={progress}/> : ''}
             {children? children :<WordList setUserWords = {setUserWords} userWords={userWords} data={words} isAuth = {isAuth} />}
             {children ? '' : isAuth && params.group ? <Games percentage={progress} /> : ''}          
         </div>
