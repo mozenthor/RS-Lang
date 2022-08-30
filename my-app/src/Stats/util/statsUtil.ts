@@ -17,7 +17,7 @@ export const calculateTotalWinRate = (stats:IStats) => {
     const totalAudiocall = stats.optional.audiocall.wrongAnswers + stats.optional.audiocall.correctAnswers;
     const totalSprint = stats.optional.sprint.wrongAnswers + stats.optional.sprint.correctAnswers;
     const totalCorrect = stats.optional.audiocall.correctAnswers + stats.optional.sprint.correctAnswers;
-    return totalCorrect/(totalAudiocall + totalSprint) *100;
+    return totalCorrect/(totalAudiocall + totalSprint) *100 || 0;
 }
 export const getWordsStatsByDay = (words: IAggWord[]) => {
     const datesArray = Array.from(new Set(words.map(item => item.userWord.optional.date))).sort();

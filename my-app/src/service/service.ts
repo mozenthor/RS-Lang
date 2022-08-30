@@ -123,3 +123,36 @@ export async function getStats(setGameStats:Dispatch<SetStateAction<IStats>>) {
     });
    setGameStats(response.data);
 }
+export async function createStats() {
+    const defaultStat = {
+        learnedWords: 0,
+        optional: {
+          date: getToday(),
+          audiocall: {
+            attempts: 0,
+            correctAnswers: 0,
+            wrongAnswers: 0,
+            bestSeries: 0
+          },
+          sprint: {
+            attempts: 0,
+            correctAnswers: 0,
+            wrongAnswers: 0,
+            bestSeries: 0
+          }
+        }
+      }
+    const data = getUserData();
+    const header = {
+        'Authorization': `Bearer ${data.token}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    };
+    await axios({
+        method: 'put',
+        url: `https://final-rslang-backend.herokuapp.com/users/${data.id}/statistics`,
+        data: defaultStat,
+        headers: header,
+    })
+
+}
