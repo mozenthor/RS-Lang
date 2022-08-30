@@ -1,3 +1,5 @@
+import { IAggWord } from "../interfaces/interfaces";
+
 const SERVER_URL = 'https://final-rslang-backend.herokuapp.com/';
 
 export const playAudio = (audioArr: string[])=> {
@@ -30,4 +32,19 @@ export const getToday = () => {
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
     return `${day}.${month}.${year}`;
+}
+
+export const getWordStatusMessage = (isHard: boolean, isLearned: boolean, word: IAggWord | undefined) => {
+    if( word ) {
+    const wordSource = word.userWord.optional.source;
+    if(isLearned) {
+        if(wordSource === 'Учебник') return `Слово изучено при помощи словаря ${word.userWord.optional.date}`;
+        if(wordSource === 'Аудиовызов' || wordSource === 'Спринт') return `Слово изучено при помощи игры "${word.userWord.optional.source}" ${word.userWord.optional.date}`
+    }
+    if(isHard) {
+        if(wordSource === 'Учебник') return `Слово помечено как сложное в словаре ${word.userWord.optional.date}`;
+        if(wordSource === 'Аудиовызов' || wordSource === 'Спринт') return `Слово не было угадано в игре "${word.userWord.optional.source}" ${word.userWord.optional.date}`
+    }
+}
+    return '';
 }

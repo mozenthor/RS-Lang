@@ -88,3 +88,8 @@
 .word_item_learned {
     background: greenyellow;
 }
+.item__message {
+    width:300px;
+    margin: auto;
+    text-align: center;
+}
