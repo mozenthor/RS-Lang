@@ -10,7 +10,7 @@ import { fetchAggWords, fetchWords } from "../service/service";
 import styles from './Etextbook.module.css'
 import { Games } from "./Components/Games/Games";
 import { ProgressInfo } from "./Components/ProgressInfo";
-
+import Spinner from 'react-bootstrap/Spinner';
 const ETextBook: React.FC<ITextBookProps> = ({children}) => {
     const [words, setWords] = useState<IWord[]>([]);
     const [userWords, setUserWords] = useState<IAggWord[]>([]);
@@ -33,6 +33,7 @@ const ETextBook: React.FC<ITextBookProps> = ({children}) => {
         }
         else { 
             setActivePage(`textbook__container_dictionary`);
+            setWords([]);
             // fetchWords('0','0');
             // history('/textbook/0/0');
         };
@@ -48,7 +49,7 @@ const ETextBook: React.FC<ITextBookProps> = ({children}) => {
 
     useEffect(() => {
         changePercentage();
-    },[words, userWords])
+    },[userWords, words])
 
     const onLeftClick = (page:number) => {
         const newPage = page - 1;
@@ -66,7 +67,8 @@ const ETextBook: React.FC<ITextBookProps> = ({children}) => {
                 onRightClick = {onRightClick} 
                 page = {params.page?.toString()} /> : ''}
             {children ? '' : isAuth && params.group ? <ProgressInfo progress={progress}/> : ''}
-            {children? children :<WordList setUserWords = {setUserWords} userWords={userWords} data={words} isAuth = {isAuth} />}
+            {words.length === 0 && params.group && <div><Spinner style={{ width: "20rem", height: "20rem", margin:'50px 525px' }} animation="border" /></div>}
+            {children ? children :<WordList setUserWords = {setUserWords} userWords={userWords} data={words} isAuth = {isAuth} />}
             {children ? '' : isAuth && params.group ? <Games percentage={progress} /> : ''}          
         </div>
     )

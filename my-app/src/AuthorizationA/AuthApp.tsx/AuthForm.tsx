@@ -13,7 +13,7 @@ const AuthForm: FC = () => {
   useEffect(() => {
     if (localStorage.getItem('token')) {
       store.setAuth(true);
-      store.checkAuth();
+      // store.checkAuth();
     }
   }, [])
 

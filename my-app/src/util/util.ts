@@ -26,6 +26,13 @@ export const getUserData = () => {
     }
 }
 
+export const removeUserData = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('refreshToken');
+}
+
 export const getToday = () => {
     const date = new Date();
     const day = date.getDate();
