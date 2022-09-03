@@ -22,7 +22,7 @@ const ETextBook: React.FC<ITextBookProps> = ({children}) => {
     const [progress, setProgress] = useState(0);
 
     const changePercentage = () => {
-        const result = userWords.filter(item => item.userWord.difficulty === 'learned').length / words.length;
+        const result = userWords.length / words.length;
         setProgress(result * 100);
     }
 
@@ -69,7 +69,7 @@ const ETextBook: React.FC<ITextBookProps> = ({children}) => {
             {children ? '' : isAuth && params.group ? <ProgressInfo progress={progress}/> : ''}
             {words.length === 0 && params.group && <div><Spinner style={{ width: "20rem", height: "20rem", margin:'50px 525px' }} animation="border" /></div>}
             {children ? children :<WordList setUserWords = {setUserWords} userWords={userWords} data={words} isAuth = {isAuth} />}
-            {children ? '' : isAuth && params.group ? <Games percentage={progress} /> : ''}          
+            {children ? '' : params.group ? <Games percentage={progress} /> : ''}          
         </div>
     )
 }

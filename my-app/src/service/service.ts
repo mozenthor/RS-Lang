@@ -124,8 +124,8 @@ export async function getStats(setGameStats:Dispatch<SetStateAction<IStats>>) {
     });
    setGameStats(response.data);
 }
-export async function createStats() {
-    const defaultStat = {
+export async function createStats(stats?: IStats) {
+    const statData = stats || {
         learnedWords: 0,
         optional: {
           date: getToday(),
@@ -152,7 +152,7 @@ export async function createStats() {
     await axios({
         method: 'put',
         url: `https://final-rslang-backend.herokuapp.com/users/${data.id}/statistics`,
-        data: defaultStat,
+        data: statData,
         headers: header,
     })
 }
@@ -167,4 +167,22 @@ export async function checkAuth () {
       catch(error) {
         throw new Error();
       }
+}
+
+export async function updateStats() {
+    const data = getUserData();
+    const header = {
+        'Authorization': `Bearer ${data.token}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    };
+    const response = await axios.request<IStats>({
+        method: 'get',
+        url: `https://final-rslang-backend.herokuapp.com/users/${data.id}/statistics`,
+        headers: header,
+    });
+    const stats = await response.data;
+    stats.learnedWords = 3;
+    console.log(stats);
+    await createStats(stats);
 }

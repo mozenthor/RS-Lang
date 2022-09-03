@@ -13,6 +13,13 @@ export const calculateLearnedWordsByDate = (words: IAggWord[], date: string) => 
     return words.filter(item => item.userWord.optional.date === date).length;
     // return count;
 }
+
+export const sortDate = function(a:string,b: string) {
+    a = a.split('.').reverse().join('');
+    b = b.split('.').reverse().join('');
+    return a > b ? 1 : a < b ? -1 : 0;
+  }
+
 export const calculateTotalWinRate = (stats:IStats) => {
     const totalAudiocall = stats.optional.audiocall.wrongAnswers + stats.optional.audiocall.correctAnswers;
     const totalSprint = stats.optional.sprint.wrongAnswers + stats.optional.sprint.correctAnswers;
@@ -20,7 +27,7 @@ export const calculateTotalWinRate = (stats:IStats) => {
     return totalCorrect/(totalAudiocall + totalSprint) *100 || 0;
 }
 export const getWordsStatsByDay = (words: IAggWord[]) => {
-    const datesArray = Array.from(new Set(words.map(item => item.userWord.optional.date))).sort();
+    const datesArray = Array.from(new Set(words.map(item => item.userWord.optional.date))).sort(sortDate);
     const wordsByDayArray:[string, number][] = []; 
     for(let i = 0; i < datesArray.length; i++ ) {
         let counter = 0;
@@ -34,7 +41,7 @@ export const getWordsStatsByDay = (words: IAggWord[]) => {
 }
 export const getUniqueDays = (words: IAggWord[]) => {
     const datesArray = new Set(words.map(item => item.userWord.optional.date));
-    return Array.from(datesArray).sort();
+    return Array.from(datesArray).sort(sortDate);
 }
 
 export const getAcumByDays = (words: IAggWord[]) => {
@@ -71,3 +78,4 @@ export const getCountsBySorce = (words: IAggWord[]) => {
     }
     return sourceCount;
 }
+

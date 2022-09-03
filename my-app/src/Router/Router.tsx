@@ -4,7 +4,7 @@ import { AuthApp } from "../AuthorizationA/AuthApp.tsx/AuthApp"
 import { Dictionary } from "../Etextbook/Components/Dictionary/Dictionary"
 import ETextBook from "../Etextbook/ETextBook"
 import MainPage from "../MainPage/MainPage"
-import { checkAuth } from "../service/service"
+import { checkAuth, updateStats } from "../service/service"
 import { Stats } from "../Stats/Stats"
 import { checkLogin, removeUserData } from "../util/util"
 
