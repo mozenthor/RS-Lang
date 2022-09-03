@@ -31,3 +31,7 @@ export const getToday = () => {
     const year = date.getFullYear();
     return `${day}.${month}.${year}`;
 }
+
+export const randomNumber = (min: number, max: number) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}

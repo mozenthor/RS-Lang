@@ -8,6 +8,7 @@ import MainPage from './MainPage/MainPage';
 import { Dictionary } from "./Etextbook/Components/Dictionary/Dictionary";
 import { AuthApp } from './AuthorizationA/AuthApp.tsx/AuthApp';
 import { Stats } from './Stats/Stats';
+import { SprintGameApp } from './SprintGame/appSprintGame';
 
 
 function App() {
@@ -32,6 +33,9 @@ function App() {
         </Routes>
         <Routes>
             <Route path={'/stats'} element = {<Stats />} />
+        </Routes>
+        <Routes>
+            <Route path={'/sprint'} element = {<SprintGameApp />} />
         </Routes>
         <Footer />
       </BrowserRouter>
