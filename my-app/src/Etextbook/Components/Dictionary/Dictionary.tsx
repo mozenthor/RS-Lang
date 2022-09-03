@@ -20,8 +20,11 @@ export const Dictionary = () => {
     },[]);
 
     return (
+        <div>
+            <h2 className={styles.dictionary__header}>Всего сложных слов: {userWords.length}</h2>
         <div className={styles.word_container}>
             {userWords.map(word => <DictionaryItem updateArray={updateArray} data={word} key ={word._id} />)}
+        </div>
         </div>
     )
 

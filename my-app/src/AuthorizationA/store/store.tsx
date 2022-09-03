@@ -1,4 +1,5 @@
 import { makeAutoObservable } from 'mobx';
+import { createStats } from '../../service/service';
 import { authService } from '../services/AuthService';
 
 export class Store {
@@ -40,7 +41,8 @@ export class Store {
   async registration(name: string, email: string, password: string) {
     try {
       await authService.registration(name, email.toLowerCase(), password);
-      this.login(email, password)
+      await this.login(email, password);
+      await createStats();
     }
     catch(error) {
       const statusCode = (error as ErrorInterface).response.status;
@@ -73,8 +75,8 @@ export class Store {
 
   async checkAuth() {
     try {
-      const userId = localStorage.getItem('userid') as string;
-      const refreshToken = localStorage.getItem('token') as string;
+      const userId = localStorage.getItem('userId') as string;
+      const refreshToken = localStorage.getItem('refreshToken') as string;
       const response = await authService.getNewToken(userId, refreshToken);
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('refreshToken', response.data.refreshToken);

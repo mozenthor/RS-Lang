@@ -1,3 +1,5 @@
+import { IAggWord } from "../interfaces/interfaces";
+
 const SERVER_URL = 'https://final-rslang-backend.herokuapp.com/';
 
 export const playAudio = (audioArr: string[])=> {
@@ -24,12 +26,34 @@ export const getUserData = () => {
     }
 }
 
+export const removeUserData = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('refreshToken');
+}
+
 export const getToday = () => {
     const date = new Date();
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
     return `${day}.${month}.${year}`;
+}
+
+export const getWordStatusMessage = (isHard: boolean, isLearned: boolean, word: IAggWord | undefined) => {
+    if( word ) {
+    const wordSource = word.userWord.optional.source;
+    if(isLearned) {
+        if(wordSource === 'Учебник') return `Слово изучено при помощи словаря ${word.userWord.optional.date}`;
+        if(wordSource === 'Аудиовызов' || wordSource === 'Спринт') return `Слово изучено при помощи игры "${word.userWord.optional.source}" ${word.userWord.optional.date}`
+    }
+    if(isHard) {
+        if(wordSource === 'Учебник') return `Слово помечено как сложное в словаре ${word.userWord.optional.date}`;
+        if(wordSource === 'Аудиовызов' || wordSource === 'Спринт') return `Слово не было угадано в игре "${word.userWord.optional.source}" ${word.userWord.optional.date}`
+    }
+    }
+    return '';
 }
 
 export const randomNumber = (min: number, max: number) => {

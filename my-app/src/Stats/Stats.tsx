@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react"
 import { IAggWord, IStats, IUserData } from "../interfaces/interfaces";
-import { fetchAggWords, getStats } from "../service/service";
-import { getUserData } from "../util/util";
+import { checkAuth, fetchAggWords, getStats } from "../service/service";
+import { checkLogin, getUserData } from "../util/util";
 import { Graphs } from "./components/Graphs";
 import { StatsMenu } from "./components/StatsMenu";
 import { TodayInfo } from "./components/TodayInfo";
 import { UserInfo } from "./components/UserInfo";
 import { calculateLearnedWords } from "./util/statsUtil";
+import styles from './Stats.module.css'
 const defaultStat = {
     learnedWords: 0,
     optional: {
@@ -43,17 +44,18 @@ export const Stats: React.FC = () => {
     }
 
     useEffect(() => {
+
         setData();
         
     },[]);
 
     useEffect(() => {
-        const count = calculateLearnedWords(userWords);
-        setLearnedWords(count);
+          const count = calculateLearnedWords(userWords);
+          setLearnedWords(count); 
     }, [userWords, gameStats]);
 
 
-    return (<div>
+    return (<div className={styles.container}>
         <StatsMenu page={page} changePage= {setPage} />
         {page === 'today' ? <TodayInfo stats={gameStats}  userWords={userWords}/> : ''}
         {page === 'total' ? <UserInfo count={learnedWords} name={userInfo.name}/> : ''}

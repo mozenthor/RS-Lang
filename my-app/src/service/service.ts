@@ -2,6 +2,7 @@ import axios from "axios";
 import { Dispatch, SetStateAction } from "react";
 import { getToday, getUserData } from "../util/util";
 import { Filters, FiltersFields, IAddWordRequestBody, IAggregatedWords, IAggWord, IStats, IUserWord, IWord } from "../interfaces/interfaces";
+import { authService } from "../AuthorizationA/services/AuthService";
 
 export async function fetchWords(page: string, group: string, setWords: Dispatch<SetStateAction<IWord[]>>) {
     const response = await axios.get<IWord[]>(`https://final-rslang-backend.herokuapp.com/words?page=${page}&group=${group}`);
@@ -122,4 +123,66 @@ export async function getStats(setGameStats:Dispatch<SetStateAction<IStats>>) {
         headers: header,
     });
    setGameStats(response.data);
+}
+export async function createStats(stats?: IStats) {
+    const statData = stats || {
+        learnedWords: 0,
+        optional: {
+          date: getToday(),
+          audiocall: {
+            attempts: 0,
+            correctAnswers: 0,
+            wrongAnswers: 0,
+            bestSeries: 0
+          },
+          sprint: {
+            attempts: 0,
+            correctAnswers: 0,
+            wrongAnswers: 0,
+            bestSeries: 0
+          }
+        }
+      }
+    const data = getUserData();
+    const header = {
+        'Authorization': `Bearer ${data.token}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    };
+    await axios({
+        method: 'put',
+        url: `https://final-rslang-backend.herokuapp.com/users/${data.id}/statistics`,
+        data: statData,
+        headers: header,
+    })
+}
+export async function checkAuth () {
+    try {
+        const userId = localStorage.getItem('userId') as string;
+        const refreshToken = localStorage.getItem('refreshToken') as string;
+        const response = await authService.getNewToken(userId, refreshToken);
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('refreshToken', response.data.refreshToken);
+      }
+      catch(error) {
+        throw new Error();
+      }
+}
+
+export async function updateStats() {
+    const data = getUserData();
+    const header = {
+        'Authorization': `Bearer ${data.token}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    };
+    const response = await axios.request<IStats>({
+        method: 'get',
+        url: `https://final-rslang-backend.herokuapp.com/users/${data.id}/statistics`,
+        headers: header,
+    });
+    const stats = await response.data;
+    stats.learnedWords = 3;
+    console.log(stats);
+    await createStats(stats);
 }
