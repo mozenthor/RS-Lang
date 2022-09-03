@@ -1,0 +1,92 @@
+.sprint__level-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  border: 2px #1abc9c solid;
+  background-color: white;
+}
+
+.sprint__start-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-height: 35px;
+  width: fit-content;
+  min-width: 100px;
+  color: white;
+  background-color: #1abc9c;
+  padding: 10px 19px;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 0;
+  border-radius: 6px;
+  outline: none;
+}
+
+.sprint__start-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.sprint__answer-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.sprint__false-button {
+  width: 90px;
+  border-radius: 6px;
+  border: none;
+  background-color: #fa7878;
+  color: white;
+  padding: 5px 5px;
+}
+
+.sprint__true-button {
+  width: 90px;
+  border-radius: 6px;
+  border: none;
+  background-color: #47be3c;
+  color: white;
+  padding: 5px 5px;
+}
+
+.sprint__wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 600px;
+  min-height: 450px;
+  gap: 15px;
+  padding: 20px;
+  border-radius: 5px;
+  border: 2px solid #1abc9c;
+}
+
+.sprint__description {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.sprint__game-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.sprint__answer-question {
+  font-size: 20px;
+  font-weight: 700;
+}

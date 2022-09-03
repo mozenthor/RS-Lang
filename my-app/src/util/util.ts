@@ -52,6 +52,10 @@ export const getWordStatusMessage = (isHard: boolean, isLearned: boolean, word: 
         if(wordSource === 'Учебник') return `Слово помечено как сложное в словаре ${word.userWord.optional.date}`;
         if(wordSource === 'Аудиовызов' || wordSource === 'Спринт') return `Слово не было угадано в игре "${word.userWord.optional.source}" ${word.userWord.optional.date}`
     }
-}
+    }
     return '';
+}
+
+export const randomNumber = (min: number, max: number) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
