@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom"
+import AudioCall from "../Audiocall/AudioCall"
 import { AuthApp } from "../AuthorizationA/AuthApp.tsx/AuthApp"
 import { Dictionary } from "../Etextbook/Components/Dictionary/Dictionary"
 import ETextBook from "../Etextbook/ETextBook"
 import MainPage from "../MainPage/MainPage"
-import { checkAuth, updateStats } from "../service/service"
+import { checkAuth } from "../service/service"
+import { SprintGameApp } from "../SprintGame/appSprintGame"
 import { Stats } from "../Stats/Stats"
 import { checkLogin, removeUserData } from "../util/util"
 
@@ -46,6 +48,8 @@ export const Router: React.FC = () => {
           <Route path={'/textbook/'} element={<ETextBook />} />
           <Route path={'/textbook/dictionary'} element = {<ETextBook> <Dictionary /> </ETextBook>} />
           <Route path={'/stats'} element = {<Stats />} />
+          <Route path={'/sprint'} element={<SprintGameApp />} />
+          <Route path={'/audiocall'} element={<AudioCall />} />
           <Route path="*" element={<Navigate to ="/" />}/>
         </Routes> :
         <Routes>
@@ -53,7 +57,10 @@ export const Router: React.FC = () => {
           <Route path={'/authorization'} element={<AuthApp />} />
           <Route path={'/textbook/:group/:page'} element={<ETextBook />} />
           <Route path={'/textbook/'} element={<ETextBook />} />
+          <Route path={'/sprint'} element={<SprintGameApp />} />
+          <Route path={'/audiocall'} element={<AudioCall />} />
           <Route path="*" element={<Navigate to ="/authorization" />}/>
+          
         </Routes>
     )
 }
