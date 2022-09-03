@@ -1,0 +1,119 @@
+.audiocall {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.sound {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 50px 0;
+}
+.sound:hover {
+  cursor: pointer;
+  border-radius: 50%;
+  /* box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px; */
+  box-shadow: 0px 0px 24px 17px rgba(34, 60, 80, 0.15);
+}
+.answers {
+  display: flex;
+}
+.progress {
+  display: flex;
+}
+.progress__item {
+  width: 10px;
+  height: 10px;
+  margin: 5px;
+  border: 1px solid teal;
+  border-radius: 50%;
+  list-style: none;
+}
+.new {
+  background-color: white;
+}
+.processed {
+  background-color: teal;
+}
+.succeses {
+  background-color: green;
+}
+.wrong {
+  background-color: red;
+}
+.btn {
+  min-width: 100px;
+  border: none;
+  margin: 10px;
+  padding: 10px;
+}
+.btn:hover {
+  opacity: 0.8;
+}
+.audioselect {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.greeting {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.greeting__title {
+  margin: 0 0 50px 0;
+}
+.greeting__container {
+  display: flex;
+}
+.greeting__btn {
+  min-width: 30px;
+  border: none;
+  margin: 10px;
+  padding: 5px;
+}
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.stat__title {
+  margin: 0 0 50px 0;
+}
+.stat__container {
+  min-width: 200px;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+}
+.description {
+  position: absolute;
+  box-sizing: border-box;
+  min-height: 50px;
+  min-width: 150px;
+  top: calc(50% - 50px);
+  right: -100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 20px;
+}
+.description__text {
+  color: cadetblue;
+}
+.audioselect__center {
+  display: flex;
+  position: relative;
+}

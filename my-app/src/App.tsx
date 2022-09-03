@@ -8,6 +8,7 @@ import MainPage from './MainPage/MainPage';
 import { Dictionary } from "./Etextbook/Components/Dictionary/Dictionary";
 import { AuthApp } from './AuthorizationA/AuthApp.tsx/AuthApp';
 import { Stats } from './Stats/Stats';
+import AudioCall from './Audiocall/AudioCall';
 
 
 function App() {
@@ -20,6 +21,9 @@ function App() {
         </Routes>
         <Routes>
           <Route path={'/authorization'} element={<AuthApp />} />
+        </Routes>
+        <Routes>
+          <Route path={'/audiocall'} element={<AudioCall />} />
         </Routes>
         <Routes>
           <Route path={'/textbook/:group/:page'} element={<ETextBook />} />

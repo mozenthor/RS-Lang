@@ -1,5 +1,5 @@
 import React from 'react';
-import dropDownPropsProps from '../../types';
+import { dropDownPropsProps } from '../../types';
 import styles from '../Page.module.css';
 import { Link } from 'react-router-dom';
 
@@ -12,17 +12,17 @@ const DropDownList = (props: dropDownPropsProps) => {
         </Link>
       </li>
       <li className={styles.dropdown__item}>
-        <Link className={styles.dropdown__link} to="/textbook">
+        <Link className={styles.dropdown__link} to="/audiocall">
           Аудиовызов
         </Link>
       </li>
       <li className={styles.dropdown__item}>
-        <Link className={styles.dropdown__link} to="/textbook">
+        <Link className={styles.dropdown__link} to="/sprint">
           Спринт
         </Link>
       </li>
       <li className={styles.dropdown__item}>
-        <Link className={styles.dropdown__link} to="/textbook">
+        <Link className={styles.dropdown__link} to="/stats">
           Статистика
         </Link>
       </li>
