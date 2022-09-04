@@ -234,7 +234,6 @@ export async function checkAuth () {
 export async function updateStats(result: IGameResult, game: GameNames) {
     const data = getUserData();
     if(!checkLogin()) {
-        console.log('игра впустую');
         return;
     }
     const header = {
@@ -264,6 +263,5 @@ export async function updateStats(result: IGameResult, game: GameNames) {
     }
     const counter = await updateWords(result.correct, result.incorrect, game);
     stats.optional[game].newWords += counter;
-    console.log(stats);
     createStats(stats);
 }

@@ -4,14 +4,7 @@ export const calculateLearnedWords = (words: IAggWord[]) => {
     return words.length;
 }
 export const calculateLearnedWordsByDate = (words: IAggWord[], date: string) => {
-    // let count = 1;
-    // for(const item of words) {
-    //     console.log(item.userWord.optional.date);
-    //     if(item.userWord.optional.date === date)
-    //     count ++;
-    // }
     return words.filter(item => item.userWord.optional.date === date).length;
-    // return count;
 }
 
 export const sortDate = function(a:string,b: string) {
@@ -50,10 +43,7 @@ export const getAcumByDays = (words: IAggWord[]) => {
         wordsByDay[i][1] += wordsByDay[i-1][1];
     }
     return wordsByDay;
-    // console.log(wordsByDay.reduce((acum, next) => {
-    //     acum = acum + next[1];
-    //     return acum;
-    // },0))
+
 }
 export const getWordsByDay = (words: IAggWord[], date: string) => {
     return words.filter(item => item.userWord.optional.date === date);

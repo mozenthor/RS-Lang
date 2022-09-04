@@ -3,7 +3,6 @@ import { IGameStatProps, RusGameNames } from "../../interfaces/interfaces"
 
 export const GameInfo:React.FC<IGameStatProps> = (props) => {
     const [winRate, setWinRate] = useState(0);
-    console.log(props.stats);
     useEffect(() => {
         const rate = props.stats.optional[props.name].correctAnswers / (props.stats.optional[props.name].correctAnswers + props.stats.optional[props.name].wrongAnswers);
         setWinRate(rate*100 || 0);
