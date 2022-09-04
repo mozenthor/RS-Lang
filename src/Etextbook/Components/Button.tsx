@@ -21,7 +21,7 @@ const Button: React.FC<IButtonProps> = (props) => {
         <button className={isActive ? styles.group__button_active + ' ' + styles.group__button : styles.group__button} onClick={() => { 
             props.onClick(props.page);
             }}>
-            {props.children || props.page}
+            {props.children || props.text}
         </button>
         
     )

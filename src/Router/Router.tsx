@@ -17,15 +17,11 @@ export const Router: React.FC = () => {
     async function checkUserData() {
       try {
         if(checkLogin()) {
-          console.log('1');
           await checkAuth();
-          console.log('2');
         }
-        console.log('3');
         setAuth(true);
       } catch(error) {
         setAuth(false);
-        console.log('сработала ошибка');
         removeUserData();
         navigate('/authorization');
       }
@@ -38,7 +34,6 @@ export const Router: React.FC = () => {
     },[navigate]);
     useEffect(() => {
       checkUserData();
-      console.log('сработало');
     }, [])
     return (
         isAuth ? <Routes>
