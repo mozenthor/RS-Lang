@@ -7,14 +7,22 @@ export interface IGamesItemProps {
     link: string,
     isActive: boolean,
     img: string,
+    params: Readonly<Partial<{
+        group: string;
+        page: string;
+    }>>,
 }
 export interface IGamesProps {
     percentage: number
+    params: Readonly<Partial<{
+        group: string;
+        page: string;
+    }>>,
 }
 export const Games: React.FC<IGamesProps> = (props) => {
     return (
     <div className={styles.tile__container}>
-        <GamesItem img={pencils} name='Аудивызов' link ='/' isActive ={props.percentage === 100 ? true: false }/>
-        <GamesItem img={clocks} name='Спринт' link ='/' isActive ={props.percentage === 100 ? true: false}/>
+        <GamesItem img={pencils} name='Аудивызов' params={props.params} link ='/audiocall' isActive ={props.percentage === 100 ? true: false }/>
+        <GamesItem img={clocks} name='Спринт' params={props.params} link ='/sprint' isActive ={props.percentage === 100 ? true: false}/>
     </div>)
 }

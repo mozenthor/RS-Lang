@@ -16,7 +16,7 @@ const ETextBook: React.FC<ITextBookProps> = ({children}) => {
     const [userWords, setUserWords] = useState<IAggWord[]>([]);
     const params = useParams<{group: string, page:string }>();
     const history = useNavigate();
-    const groups = ['0','1','2','3','4','5'];
+    const groups = [['A1','0'],['A2','1'], ['B1','2'], ['B2','3'], ['C1','4'], ['C2','5']]
     const [isAuth, setAuth] = useState(false);
     const [activePage, setActivePage] = useState('0');
     const [progress, setProgress] = useState(0);
@@ -69,7 +69,7 @@ const ETextBook: React.FC<ITextBookProps> = ({children}) => {
             {children ? '' : isAuth && params.group ? <ProgressInfo progress={progress}/> : ''}
             {words.length === 0 && params.group && <div><Spinner style={{ width: "20rem", height: "20rem", margin:'50px 525px' }} animation="border" /></div>}
             {children ? children :<WordList setUserWords = {setUserWords} userWords={userWords} data={words} isAuth = {isAuth} />}
-            {children ? '' : params.group ? <Games percentage={progress} /> : ''}          
+            {children ? '' : params.group ? <Games params ={params} percentage={progress} /> : ''}          
         </div>
     )
 }

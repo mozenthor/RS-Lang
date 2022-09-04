@@ -10,8 +10,8 @@ export const Navigation: React.FC<INavigationProps> = (props) => {
 
     return (
         <div className={styles.group__container}>
-                {props.groups.map(item => <Button onClick = {(btn) => history(`/textbook/${btn}/0`, {replace: true})} key={item} page={item} />)}
-                {props.isAuth ? <Button onClick = {() => history(`/textbook/dictionary`)} key={'6'} page={'dictionary'} >Сложные слова</Button> : ''}
+                {props.groups.map(item => <Button onClick = {(btn) => history(`/textbook/${btn}/0`, {replace: true})} key={item[1]} page={item[1]} text={item[0]} />)}
+                {props.isAuth ? <Button onClick = {() => history(`/textbook/dictionary`)} key={'6'} page={'dictionary'} text={'dictionary'}>Сложные слова</Button> : ''}
         </div>
         
     )

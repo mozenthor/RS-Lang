@@ -52,13 +52,14 @@ export interface IDictionaryItemProps {
 }
 
 export interface IButtonProps {
+    text: string
     page:string,
     onClick: (item: string) => void,
     children?: React.ReactNode
 }
 
 export interface INavigationProps {
-    groups: string[],
+    groups: string[][],
     isAuth: boolean,
 }
 
