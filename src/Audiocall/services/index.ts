@@ -1,12 +1,7 @@
 import axios from 'axios';
 import { Dispatch, SetStateAction } from 'react';
-import { IWord } from '../../interfaces/interfaces';
 import { Twords } from '../../types';
-export async function fetchWords(page: string, group: string, fn: Dispatch<SetStateAction<IWord[]>>) {
-  const response = await axios.get(`https://final-rslang-backend.herokuapp.com/words?page=${page}&group=${group}`);
-  fn(response.data);
-  //return {...(await response.data)};
-}
+
 const ANSWERS_COUNT = 5;
 
 export const arrayShuffle = (array: string[]) => {
@@ -44,3 +39,13 @@ export const preparedWords = (data: TwordsSingle[]) => {
     return { ...el, answers: answers };
   });
 };
+
+export async function fetchPreparedWords(page: string, group: string, fn: Dispatch<SetStateAction<Twords[]>>) {
+  const response = await axios.get(`https://final-rslang-backend.herokuapp.com/words?page=${page}&group=${group}`);
+  const result = await response.data;
+  const prepared = preparedWords(result);
+  fn(prepared);
+  //return {...(await response.data)};
+}
+export const randomGroup = () => Math.floor(Math.random() * 5);
+export const randomPage = () => Math.floor(Math.random() * 20);

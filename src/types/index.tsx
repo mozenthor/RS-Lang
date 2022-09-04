@@ -25,5 +25,5 @@ export type Tstats = {
 };
 
 export type TaudioCall = { words: Twords[]; withGreeting: boolean };
-export type TgameRoute = { group?: number; page?: number };
+export type TgameRoute = { group: string, page: string };
 export type reactCb = React.Dispatch<React.SetStateAction<boolean>>;

@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import style from './AudioCall.module.css';
 
+import { useParams } from 'react-router-dom';
 import GameRoute from './components/GameRoute';
 
-
-
-
-const AudioCall = (props: {group?: number, page?: number}) => {
-
+const AudioCall = () => {
+  const params = useParams<{group: string, page: string}>();
+  const queryParams = {page: params.page || '', group: params.group || '' };
+    
   return (
     <div>
-     <GameRoute init = {props} />
+     <GameRoute init = {queryParams} />
     </div>
   );
 };

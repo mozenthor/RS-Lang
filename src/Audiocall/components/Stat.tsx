@@ -6,11 +6,10 @@ import { updateStats } from '../../service/service';
 const Stat = (props: { value: Tstats }) => {
   const statistics = props.value;
   const init = Boolean(statistics.correct.length || statistics.incorrect.length);
-  // const [isVisible, setVisible] = useState(init);
-  // useEffect(() => {},[props])
   useEffect(() => {
-    //updateStats(props.value, 'audiocall');
-    console.log(props.value)
+  if(init) {    
+    updateStats(statistics, 'audiocall');
+  }
   }, [props]);
   return (
     <div>

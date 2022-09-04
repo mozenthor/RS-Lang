@@ -1,5 +1,4 @@
-import React, { useState, useMemo } from 'react';
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
 
 import Game from '../components/Game';
 import Greeting from '../components/Greeting';
@@ -7,25 +6,31 @@ import Stat from '../components/Stat';
 import { Tstats } from '../../types';
 import { TgameRoute } from '../../types';
 import statDefault from '../data/default';
-import { IWord } from '../../interfaces/interfaces';
-import data from '../components/data';
-import { preparedWords } from '../services';
-
-const arr = preparedWords(data);
+import { fetchPreparedWords, randomGroup, randomPage } from '../services';
+import { Twords } from '../../types';
 
 const GameRoute = (props: { init: TgameRoute }) => {
-
   const initGreeting = props.init.group || props.init.page;
-
+  const page = props.init.page || String(randomPage());
+  const group = props.init.group || String(randomGroup());
+  const [words, setWords] = useState<Twords[]>([]);
+  const [isLoaded, setLoaded] = useState(false);
   const [isGreeting, setGreeting] = useState(Boolean(!initGreeting));
   const [stat, setStat] = useState(statDefault);
   const [isGame, setGame] = useState(false);
-//   const words = useMemo( async () => {
-   
-//         const response = await axios.get<IWord[]>(`https://final-rslang-backend.herokuapp.com/words?page=0&group=0`);
-//         return response.data;
-      
-//   },[props]);
+
+  useEffect(() => {
+    fetchPreparedWords(page, group, setWords);
+  }, []);
+
+  useEffect(() => {
+    if (words.length) {
+      setLoaded(true);
+    } else {
+      setLoaded(false);
+    }
+  }, [words]);
+
   const greetingCb = () => {
     setGreeting(false);
     setGame(true);
@@ -34,12 +39,14 @@ const GameRoute = (props: { init: TgameRoute }) => {
     setGame(false);
     setStat(obj);
   };
-  return (
+
+  const content = (
     <div>
       {isGreeting && <Greeting cb={greetingCb} />}
-      {isGame && <Game cb={gameCb} words={arr} />}
+      {isGame && <Game cb={gameCb} words={words} />}
       {stat && <Stat value={stat} />}
     </div>
   );
+  return <div>{isLoaded && content}</div>;
 };
 export default GameRoute;
