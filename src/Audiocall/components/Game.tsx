@@ -23,12 +23,16 @@ const Game = (props: { words: Twords[]; cb: (value:Tstats ) => void }) => {
 //     props.cb(true);
 //   }, [isGaming]);
 
-  const addStat = (isRight: boolean) => {
+  const addStat = (isRight: boolean) => {   
+    
     if (isRight) {
       stats.correct.push(words.id);
       currentTry.count += 1;
     } else {
-      stats.incorrect.push(words.id);
+      stats.incorrect.push(words.id);      
+    }
+    
+    if(!isRight || index === wordsList.length - 1 ){
       if (currentTry.count > stats.maxtry) {
         stats.maxtry = currentTry.count;
       }
@@ -45,13 +49,18 @@ const Game = (props: { words: Twords[]; cb: (value:Tstats ) => void }) => {
   };
 
   const next = () => {
+    
     if (index < wordsList.length - 1) {
       setIndex(index + 1);
       colorStatus();
+      
     } else {
+      colorStatus();
       setGaming(false);
       props.cb(stats);
     }
+    console.log(stats);
+   
   };
 
   const compare = (answer: string) => {

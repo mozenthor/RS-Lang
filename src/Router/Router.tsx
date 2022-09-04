@@ -50,6 +50,7 @@ export const Router: React.FC = () => {
           <Route path={'/stats'} element = {<Stats />} />
           <Route path={'/sprint'} element={<SprintGameApp />} />
           <Route path={'/audiocall'} element={<AudioCall />} />
+          <Route path={'/audiocall/:group/:page'} element={<AudioCall />} />
           <Route path="*" element={<Navigate to ="/" />}/>
         </Routes> :
         <Routes>
