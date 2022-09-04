@@ -93,7 +93,7 @@ export class Store {
       this.setPage();
     }
     const response = localStorage.getItem('token')
-      ? await services.getUserWords(this.group, this.page)
+      ? await services.getWords(this.group, this.page)
       : await services.getWords(this.group, this.page);
     console.log(response)
     this.currentWord = response.splice(randomWord, 1)[0];
