@@ -16,13 +16,15 @@ const defaultStat = {
         attempts: 0,
         correctAnswers: 0,
         wrongAnswers: 0,
-        bestSeries: 0
+        bestSeries: 0, 
+        newWords: 0
       },
       sprint: {
         attempts: 0,
         correctAnswers: 0,
         wrongAnswers: 0,
-        bestSeries: 0
+        bestSeries: 0,
+        newWords: 0
       }
     }
   }

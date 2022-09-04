@@ -13,7 +13,7 @@ const GameStats: FC = () => {
         className="sprint__start-button"
         onClick={() => {
           store.setState('startScreen');
-          store.usetParams();
+          store.unsetParams();
         }}
       >
         back

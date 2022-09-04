@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Dispatch, SetStateAction } from "react";
-import { getToday, getUserData } from "../util/util";
-import { Filters, FiltersFields, IAddWordRequestBody, IAggregatedWords, IAggWord, IStats, IUserWord, IWord } from "../interfaces/interfaces";
+import { checkLogin, getToday, getUserData } from "../util/util";
+import { Filters, FiltersFields, GameNames, IAddWordRequestBody, IAggregatedWords, IAggWord, IGameResult, IStats, IUserWord, IWord, RusGameNames } from "../interfaces/interfaces";
 import { authService } from "../AuthorizationA/services/AuthService";
 
 export async function fetchWords(page: string, group: string, setWords: Dispatch<SetStateAction<IWord[]>>) {
@@ -71,8 +71,30 @@ export async function addWord(wordID:string, type: string, source: string) {
         url: `https://final-rslang-backend.herokuapp.com/users/${data.id}/words/${wordID}`,
         data: body,
         headers: header,
-    })
+    });
+}
 
+export async function putWord(wordID:string, type: string, source: string) {
+    const data = getUserData();
+    const header = {
+        'Authorization': `Bearer ${data.token}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    }
+    const body: IAddWordRequestBody = {
+        difficulty: type,
+        optional: {
+            date: getToday(),
+            isMarked: true,
+            source: source
+        }
+    };
+    await axios({
+        method: 'put',
+        url: `https://final-rslang-backend.herokuapp.com/users/${data.id}/words/${wordID}`,
+        data: body,
+        headers: header,
+    });
 }
 export async function deleteWord(wordID:string) {
     const data = getUserData();
@@ -156,6 +178,46 @@ export async function createStats(stats?: IStats) {
         headers: header,
     })
 }
+
+export async function updateWords(correctAnswers: string[], incorrectAnswers: string[], game: GameNames) {
+    const data = getUserData();
+    const header = {
+        'Authorization': `Bearer ${data.token}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    };
+    const response = await axios.request<IUserWord[]>({
+        method: 'get',
+        url: `https://final-rslang-backend.herokuapp.com/users/${data.id}/words`,
+        headers: header,
+    });
+    let newWordsCount = 0;
+    const wordArray = response.data;
+    for(let i = 0; i<correctAnswers.length; i++) {
+        const index = wordArray.findIndex(item => item.wordId === correctAnswers[i]);
+        if(index>-1) {
+            if(wordArray[index].difficulty === 'learned') continue;
+            if(wordArray[index].difficulty === 'hard') await putWord(correctAnswers[i], 'learned', RusGameNames[game])
+        }
+        if(index==-1) {
+            await addWord(correctAnswers[i], 'learned', RusGameNames[game]);
+            newWordsCount += 1;
+        }
+    }
+    for(let i = 0; i<incorrectAnswers.length; i++) {
+        const index = wordArray.findIndex(item => item.wordId === incorrectAnswers[i]);
+        if(index>-1) {
+            if(wordArray[index].difficulty === 'hard') continue;
+            if(wordArray[index].difficulty === 'learned') await putWord(incorrectAnswers[i], 'hard', RusGameNames[game])
+        }
+        if(index==-1) {
+            await addWord(incorrectAnswers[i], 'hard', RusGameNames[game]);
+            newWordsCount += 1;
+        }
+    }
+    return newWordsCount;
+}
+
 export async function checkAuth () {
     try {
         const userId = localStorage.getItem('userId') as string;
@@ -169,8 +231,12 @@ export async function checkAuth () {
       }
 }
 
-export async function updateStats() {
+export async function updateStats(result: IGameResult, game: GameNames) {
     const data = getUserData();
+    if(!checkLogin()) {
+        console.log('игра впустую');
+        return;
+    }
     const header = {
         'Authorization': `Bearer ${data.token}`,
         'Accept': 'application/json',
@@ -182,7 +248,22 @@ export async function updateStats() {
         headers: header,
     });
     const stats = await response.data;
-    stats.learnedWords = 3;
+    delete stats.id;
+    if (stats.optional.date == getToday()) {
+        stats.optional[game].attempts += 1;
+        stats.optional[game].correctAnswers += result.correct.length;
+        stats.optional[game].wrongAnswers += result.incorrect.length;
+        stats.optional[game].bestSeries = Math.max(stats.optional[game].bestSeries, result.maxtry);
+    }
+    else {
+        stats.optional.date = getToday();
+        stats.optional[game].attempts = 1;
+        stats.optional[game].correctAnswers = result.correct.length;
+        stats.optional[game].wrongAnswers = result.incorrect.length;
+        stats.optional[game].bestSeries = result.maxtry;
+    }
+    const counter = await updateWords(result.correct, result.incorrect, game);
+    stats.optional[game].newWords += counter;
     console.log(stats);
-    await createStats(stats);
+    createStats(stats);
 }

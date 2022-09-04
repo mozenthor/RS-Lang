@@ -29,7 +29,7 @@ const MainGame: FC = () => {
         <button
           className="sprint__false-button"
           onClick={() => {
-            store.randomParaSlov();
+            store.generateQuestion();
             store.setUserAnswer(false);
             store.isGuessed(store.currentWord);
           }}
@@ -39,7 +39,7 @@ const MainGame: FC = () => {
         <button
           className="sprint__true-button"
           onClick={() => {
-            store.randomParaSlov();
+            store.generateQuestion();
             store.setUserAnswer(true);
             store.isGuessed(store.currentWord);
           }}
