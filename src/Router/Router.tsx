@@ -46,6 +46,7 @@ export const Router: React.FC = () => {
           <Route path={'/sprint'} element={<SprintGameApp />} />
           <Route path={'/audiocall'} element={<AudioCall />} />
           <Route path={'/audiocall/:group/:page'} element={<AudioCall />} />
+          <Route path={'/sprint/:group/:page'} element={<SprintGameApp />} />
           <Route path="*" element={<Navigate to ="/" />}/>
         </Routes> :
         <Routes>
@@ -55,6 +56,8 @@ export const Router: React.FC = () => {
           <Route path={'/textbook/'} element={<ETextBook />} />
           <Route path={'/sprint'} element={<SprintGameApp />} />
           <Route path={'/audiocall'} element={<AudioCall />} />
+          <Route path={'/audiocall/:group/:page'} element={<AudioCall />} />
+          <Route path={'/sprint/:group/:page'} element={<SprintGameApp />} />
           <Route path="*" element={<Navigate to ="/authorization" />}/>
           
         </Routes>

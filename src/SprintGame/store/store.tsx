@@ -1,6 +1,7 @@
 import { makeAutoObservable } from "mobx";
 import { IGameResult, IWord } from "../../interfaces/interfaces";
-import { randomNumber } from "../../util/util";
+import { updateStats } from "../../service/service";
+import { randomNumber, sprintResults } from "../../util/util";
 import { ILevelButtonProps } from "../components/ChoiseLevelButtons";
 import { SprintServices } from "../services/SprintServices";
 
@@ -92,8 +93,9 @@ export class Store {
       this.setPage();
     }
     const response = localStorage.getItem('token')
-      ? await services.getWords(this.group, this.page)
+      ? await services.getUserWords(this.group, this.page)
       : await services.getWords(this.group, this.page);
+    console.log(response)
     this.currentWord = response.splice(randomWord, 1)[0];
     const randomAnswers = [this.currentWord.wordTranslate, response[randomWordTranslate].wordTranslate]
     this.question = this.currentWord.word;
@@ -129,6 +131,7 @@ export class Store {
       cancelAnimationFrame(this.animation);
       this.setState('stats');
       this.setBestSeries();
+      updateStats(sprintResults(), 'sprint');
     }
   }
 
