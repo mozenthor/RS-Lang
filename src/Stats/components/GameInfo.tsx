@@ -10,7 +10,7 @@ export const GameInfo:React.FC<IGameStatProps> = (props) => {
     return(<div>
         <h3>{RusGameNames[props.name]}</h3>
         <div>Количество попыток: {props.stats.optional[props.name].attempts}</div>
-        <div>Количество изученных слов: {props.stats.optional[props.name].correctAnswers}</div>
+        <div>Количество новых слов: {props.stats.optional[props.name].newWords}</div>
         <div>Правильных ответов: {winRate.toFixed(2)}%</div>
         <div>Лучшая серия: {props.stats.optional[props.name].bestSeries}</div>
     </div>)

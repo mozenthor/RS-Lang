@@ -139,7 +139,7 @@ export interface ITodayInfoProps {
 export type GameNames = 'audiocall' | 'sprint';
 
 export enum RusGameNames {
-    audiocall = 'Аудивызов',
+    audiocall = 'Аудиовызов',
     sprint = 'Спринт'
 }
 
@@ -154,14 +154,22 @@ export interface GameStatFields {
     correctAnswers: number,
     wrongAnswers: number,
     bestSeries: number,
+    newWords: number
 }
 export interface IStats {
+    id?: string,
     learnedWords: number,
     optional: {
         date: string,
         audiocall: GameStatFields, 
         sprint: GameStatFields,
     }
+}
+
+export type IGameResult = {
+    correct: string[],
+    incorrect: string[],
+    maxtry: number
 }
 
 export const SERVER_URL = 'https://final-rslang-backend.herokuapp.com/';
