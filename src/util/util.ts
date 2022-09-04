@@ -1,4 +1,5 @@
-import { IAggWord } from "../interfaces/interfaces";
+import { IAggWord, IGameResult } from "../interfaces/interfaces";
+import { store } from "../SprintGame/appSprintGame";
 
 const SERVER_URL = 'https://final-rslang-backend.herokuapp.com/';
 
@@ -58,4 +59,16 @@ export const getWordStatusMessage = (isHard: boolean, isLearned: boolean, word: 
 
 export const randomNumber = (min: number, max: number) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+export const sprintResults = () => {
+    const sprintRes: IGameResult = {
+        correct: [],
+        incorrect: [],
+        maxtry: 0
+      };
+    store.gameResult.correct.forEach(el => sprintRes.correct.push(el));
+    store.gameResult.incorrect.forEach(el => sprintRes.incorrect.push(el));
+    sprintRes.maxtry = store.gameResult.maxtry;
+    return sprintRes;
 }

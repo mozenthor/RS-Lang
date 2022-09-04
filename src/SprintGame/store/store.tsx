@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import { IWord } from "../../interfaces/interfaces";
+import { IGameResult, IWord } from "../../interfaces/interfaces";
 import { randomNumber } from "../../util/util";
 import { ILevelButtonProps } from "../components/ChoiseLevelButtons";
 import { SprintServices } from "../services/SprintServices";
@@ -8,6 +8,8 @@ const services = new SprintServices();
 
 export class Store {
   group = '';
+
+  page = '';
 
   state = 'startScreen';
 
@@ -33,6 +35,16 @@ export class Store {
 
   currentWord!: IWord;
 
+  currentSeries = 0;
+
+  bestSeries = 0;
+
+  gameResult: IGameResult = {
+    correct: [],
+    incorrect: [],
+    maxtry: 0
+  };
+
   ChoiseButtonsPropsArray: ILevelButtonProps[] = [
     {level:'A1', group:'0', color: 'white', activeColor:'lightgreen'},
     {level:'A2', group:'1', color: 'white', activeColor:'lightpink'},
@@ -45,6 +57,13 @@ export class Store {
   constructor() {
     makeAutoObservable(this);
   }
+
+  // setParams() {
+  //   if (this.params.group && this.params.page) {
+  //     this.group = this.params.group;
+  //     this.page = this.params.page;
+  //   }
+  // }
 
   setGroup(group: string) {
     this.group = group;
@@ -62,11 +81,19 @@ export class Store {
     this.state = state;
   }
 
-  async randomParaSlov() {
-    const randomPage = randomNumber(0, 29).toString();
+  setPage(){
+    this.page = randomNumber(0, 29).toString();
+  }
+
+  async generateQuestion() {
     const randomWord = randomNumber(0, 19);
-    const randomWordTranslate = randomNumber(0,18); 
-    const response = await services.getWords(this.group, randomPage);
+    const randomWordTranslate = randomNumber(0,18);
+    if (this.group !== '') {
+      this.setPage();
+    }
+    const response = localStorage.getItem('token')
+      ? await services.getWords(this.group, this.page)
+      : await services.getWords(this.group, this.page);
     this.currentWord = response.splice(randomWord, 1)[0];
     const randomAnswers = [this.currentWord.wordTranslate, response[randomWordTranslate].wordTranslate]
     this.question = this.currentWord.word;
@@ -81,9 +108,13 @@ export class Store {
 
   isGuessed(word: IWord) {
     if (this.userAnswer === this.correctAnswer) {
-      this.guessedWords.push(word)
+      this.guessedWords.push(word);
+      this.gameResult.correct.push(word.id)
+      this.currentSeries += 1;
     } else {
-      this.notGuessedWords.push(word)
+      this.notGuessedWords.push(word);
+      this.gameResult.incorrect.push(word.id)
+      this.currentSeries = 0;
     }
   }
 
@@ -97,10 +128,11 @@ export class Store {
     } else {
       cancelAnimationFrame(this.animation);
       this.setState('stats');
+      this.setBestSeries();
     }
   }
 
-  usetParams() {
+  unsetParams() {
     this.question = '';
     this.answer = '';
     this.correctAnswer = true;
@@ -108,5 +140,15 @@ export class Store {
     this.score = 0;
     this.guessedWords = [];
     this.notGuessedWords = [];
+    this.currentSeries = 0;
+    this.gameResult.correct = [];
+    this.gameResult.incorrect = [];
+  }
+
+  setBestSeries() {
+    if(this.bestSeries < this.currentSeries) {
+      this.bestSeries = this.currentSeries;
+      this.gameResult.maxtry = this.bestSeries;
+    };
   }
 }
