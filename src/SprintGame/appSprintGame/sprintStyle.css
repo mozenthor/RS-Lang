@@ -26,6 +26,12 @@
   border: 0;
   border-radius: 6px;
   outline: none;
+  text-decoration: none;
+}
+
+.sprint__start-button:hover{
+  cursor: pointer;
+  color:white
 }
 
 .sprint__start-buttons {
@@ -65,7 +71,7 @@
   align-items: center;
   justify-content: center;
   width: 600px;
-  min-height: 450px;
+  height: 450px;
   gap: 15px;
   padding: 20px;
   border-radius: 5px;
@@ -89,4 +95,23 @@
 .sprint__answer-question {
   font-size: 20px;
   font-weight: 700;
+}
+
+.sprint__start-buttons_wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.sprint__stats {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  overflow-y: auto;
+}
+
+.sprint__stats_buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 }

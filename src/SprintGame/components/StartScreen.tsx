@@ -30,7 +30,7 @@ const StartScreen: FC = () => {
         <div>
           Уровень сложности: <span style={{fontWeight: 600, marginLeft: '5px'}}>{store.ChoiseButtonsPropsArray[Number(store.group)].level}</span>
         </div>
-        <div>
+        <div className="sprint__start-buttons_wrapper">
           <button
             className="sprint__start-button"
             onClick={start}

@@ -59,13 +59,6 @@ export class Store {
     makeAutoObservable(this);
   }
 
-  // setParams() {
-  //   if (this.params.group && this.params.page) {
-  //     this.group = this.params.group;
-  //     this.page = this.params.page;
-  //   }
-  // }
-
   setGroup(group: string) {
     this.group = group;
   }
@@ -89,13 +82,9 @@ export class Store {
   async generateQuestion() {
     const randomWord = randomNumber(0, 19);
     const randomWordTranslate = randomNumber(0,18);
-    if (this.group !== '') {
-      this.setPage();
-    }
     const response = localStorage.getItem('token')
       ? await services.getWords(this.group, this.page)
       : await services.getWords(this.group, this.page);
-    console.log(response)
     this.currentWord = response.splice(randomWord, 1)[0];
     const randomAnswers = [this.currentWord.wordTranslate, response[randomWordTranslate].wordTranslate]
     this.question = this.currentWord.word;
@@ -136,6 +125,8 @@ export class Store {
   }
 
   unsetParams() {
+    this.group = '';
+    this.page = '';
     this.question = '';
     this.answer = '';
     this.correctAnswer = true;

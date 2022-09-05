@@ -14,11 +14,13 @@ const AppSprint: FC = () => {
   if(params.group && params.page) {
     store.group = params.group;
     store.page = params.page;
+  } else {
+    store.setPage()
   }
 
   if (store.state === 'startScreen') {
     return (
-        <StartScreen></StartScreen>
+      <StartScreen></StartScreen>
     )
   } if (store.state === 'mainGame') {
     return (
