@@ -3,37 +3,35 @@ import style from '../AudioCall.module.css';
 import AudioSelect from '../components/Card';
 import Progress from '../components/Progress';
 import { Twords, Tstats } from '../../types';
-import stat, { levels, ENTER_CODE } from '../data/default';
+import { levels, ENTER_CODE } from '../data/default';
 
 const Game = (props: { words: Twords[]; cb: (value: Tstats) => void; level: string; page: string }) => {
   const [index, setIndex] = useState(0);
   const [wordsList] = useState(props.words);
   const [currentTry] = useState({ count: 0 });
-  const [stats, setStats] = useState({ ...stat });
+  const [corectCount, setCorrectCount] = useState<string[]>([]);
+  const [incorectCount, setIncorrect] = useState<string[]>([]);
+  const [maxtry, setMaxTry] = useState(0);
   const progress: string[] = new Array(wordsList.length).fill('new');
   const [status, setStatus] = useState([...progress]);
   const [words, setWords] = useState(wordsList[index]);
   const engLevel = parseInt(props.level) || 0;
   const info = `Уровень: ${levels[engLevel]} Страница: ${props.page}`;
- 
+
   useEffect(() => {
     setWords(wordsList[index]);
   }, [index]);
-  useEffect(() => {
-    setStats({ ...stat });
-
-  }, [props]);
   const addStat = (isRight: boolean) => {
     if (isRight) {
-      stats.correct.push(words.id);
+      corectCount.push(words.id);
       currentTry.count += 1;
     } else {
-      stats.incorrect.push(words.id);
+      incorectCount.push(words.id);
     }
 
     if (!isRight || index === wordsList.length - 1) {
-      if (currentTry.count > stats.maxtry) {
-        stats.maxtry = currentTry.count;
+      if (currentTry.count > maxtry) {
+        setMaxTry(currentTry.count);
       }
       currentTry.count = 0;
     }
@@ -53,7 +51,10 @@ const Game = (props: { words: Twords[]; cb: (value: Tstats) => void; level: stri
       colorStatus();
     } else {
       colorStatus();
-      props.cb(stats);
+      props.cb({ correct: corectCount, incorrect: incorectCount, maxtry: maxtry });
+      setCorrectCount([]);
+      setIncorrect([]);
+      setMaxTry(0);
     }
   };
   const keyboardHandler = (e: KeyboardEvent): void => {
