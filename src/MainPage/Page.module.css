@@ -58,6 +58,13 @@ body {
     white-space: normal;
     text-decoration: none;
 }
+.header__menuLogo {
+    display: flex;
+}
+
+.header__menuLogo a{
+    text-decoration: none;
+}
 .dropdown__list {
     max-width: 120px;   
     position: absolute;
@@ -230,3 +237,18 @@ section {
     right: -10%; 
       
 }
+
+.logo {
+    text-decoration: none;
+    text-align: right;
+    color:white;
+    line-height: 50px;
+    width:135px;
+    font-size: 1.3em;
+    background-image: url('./assets/logo.png');
+    background-repeat: no-repeat;
+    background-size: 50px;
+    background-position: 0%;
+    margin-right: 30px;
+}
+
