@@ -11,6 +11,7 @@ const StartScreen: FC = () => {
     store.setState('mainGame');
     store.startTime = new Date().getTime();
     store.timer();
+    document.addEventListener('keypress', store.handleKey);
   }
 
   if (store.group === '') {

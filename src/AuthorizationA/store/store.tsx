@@ -11,6 +11,9 @@ export class Store {
 
   constructor() {
     makeAutoObservable(this);
+    if(localStorage.getItem('token')) {
+      this.isAuth = true;
+    }
   }
 
   addUserData(token: string, name: string, id: string, refreshToken: string) {

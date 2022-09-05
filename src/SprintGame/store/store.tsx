@@ -45,6 +45,8 @@ export class Store {
     incorrect: [],
     maxtry: 0
   };
+  
+  disabledButton = false;
 
   ChoiseButtonsPropsArray: ILevelButtonProps[] = [
     {level:'A1', group:'0', color: 'white', activeColor:'lightgreen'},
@@ -110,7 +112,7 @@ export class Store {
   }
 
   timer = () => {
-    const gameDuration = 10;
+    const gameDuration = 30;
     const currentTime = new Date().getTime();
     const timing = (currentTime - this.startTime) / 1000;
     this.time = gameDuration - Math.trunc(timing);
@@ -121,12 +123,16 @@ export class Store {
       this.setState('stats');
       this.setBestSeries();
       updateStats(sprintResults(), 'sprint');
+      document.removeEventListener('keypress', this.handleKey);
     }
   }
 
   unsetParams() {
     this.group = '';
     this.page = '';
+    cancelAnimationFrame(this.animation);
+    document.removeEventListener('keypress', this.handleKey);
+    this.state = 'startScreen';
     this.question = '';
     this.answer = '';
     this.correctAnswer = true;
@@ -145,4 +151,24 @@ export class Store {
       this.gameResult.maxtry = this.bestSeries;
     };
   }
+
+  async chekAnswer(bool: boolean) {
+    this.disabledButton = true;
+    await this.generateQuestion();
+    this.setUserAnswer(bool);
+    this.isGuessed(this.currentWord);
+    this.disabledButton = false;
+  }
+
+   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   handleKey = async (event: any) => {
+    if (this.state === 'mainGame') {
+      if (event.key === '1') {
+        this.chekAnswer(false)
+      } else if (event.key === '2') {
+        this.chekAnswer(true)
+      }
+    }
+    event.preventDefault();
+  };
 }

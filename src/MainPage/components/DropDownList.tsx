@@ -2,6 +2,7 @@ import React from 'react';
 import { dropDownPropsProps } from '../../types';
 import styles from '../Page.module.css';
 import { Link } from 'react-router-dom';
+import { store } from '../../SprintGame/appSprintGame';
 
 const DropDownList = (props: dropDownPropsProps) => {
   return (
@@ -17,7 +18,7 @@ const DropDownList = (props: dropDownPropsProps) => {
         </Link>
       </li>
       <li className={styles.dropdown__item}>
-        <Link className={styles.dropdown__link} to="/sprint">
+        <Link onClick={() => store.unsetParams()} className={styles.dropdown__link} to="/sprint">
           Спринт
         </Link>
       </li>

@@ -27,7 +27,7 @@ const AuthForm: FC = () => {
 
   if (store.isLoginRegistration) {
     return (
-      <div>
+      <div className="auth_wrapper">
         <div className="auth_text">
           Войдите в свой аккаунт
         </div>

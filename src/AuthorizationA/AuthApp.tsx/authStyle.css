@@ -53,3 +53,8 @@
   gap: 10px;
   align-items: center;
 }
+
+.auth_wrapper {
+  margin: 0 auto;
+  min-width: 400px;
+}
