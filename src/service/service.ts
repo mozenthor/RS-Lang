@@ -3,7 +3,30 @@ import { Dispatch, SetStateAction } from "react";
 import { checkLogin, getToday, getUserData } from "../util/util";
 import { Filters, FiltersFields, GameNames, IAddWordRequestBody, IAggregatedWords, IAggWord, IGameResult, IStats, IUserWord, IWord, RusGameNames } from "../interfaces/interfaces";
 import { authService } from "../AuthorizationA/services/AuthService";
+import { start } from "repl";
 
+
+
+export const startStat:IStats = {
+    learnedWords: 0,
+    optional: {
+      date: getToday(),
+      audiocall: {
+        attempts: 0,
+        correctAnswers: 0,
+        wrongAnswers: 0,
+        bestSeries: 0,
+        newWords: 0
+      },
+      sprint: {
+        attempts: 0,
+        correctAnswers: 0,
+        wrongAnswers: 0,
+        bestSeries: 0,
+        newWords: 0
+      }
+    }
+  }
 export async function fetchWords(page: string, group: string, setWords: Dispatch<SetStateAction<IWord[]>>) {
     const response = await axios.get<IWord[]>(`https://final-rslang-backend.herokuapp.com/words?page=${page}&group=${group}`);
     setWords(response.data);
@@ -144,27 +167,11 @@ export async function getStats(setGameStats:Dispatch<SetStateAction<IStats>>) {
         url: `https://final-rslang-backend.herokuapp.com/users/${data.id}/statistics`,
         headers: header,
     });
+    if(response.data.optional.date!== getToday()) response.data = startStat;
    setGameStats(response.data);
 }
 export async function createStats(stats?: IStats) {
-    const statData = stats || {
-        learnedWords: 0,
-        optional: {
-          date: getToday(),
-          audiocall: {
-            attempts: 0,
-            correctAnswers: 0,
-            wrongAnswers: 0,
-            bestSeries: 0
-          },
-          sprint: {
-            attempts: 0,
-            correctAnswers: 0,
-            wrongAnswers: 0,
-            bestSeries: 0
-          }
-        }
-      }
+    const statData = stats || startStat
     const data = getUserData();
     const header = {
         'Authorization': `Bearer ${data.token}`,
@@ -246,7 +253,7 @@ export async function updateStats(result: IGameResult, game: GameNames) {
         url: `https://final-rslang-backend.herokuapp.com/users/${data.id}/statistics`,
         headers: header,
     });
-    const stats = await response.data;
+    let stats = await response.data;
     delete stats.id;
     if (stats.optional.date == getToday()) {
         stats.optional[game].attempts += 1;
@@ -255,6 +262,7 @@ export async function updateStats(result: IGameResult, game: GameNames) {
         stats.optional[game].bestSeries = Math.max(stats.optional[game].bestSeries, result.maxtry);
     }
     else {
+        stats = startStat;
         stats.optional.date = getToday();
         stats.optional[game].attempts = 1;
         stats.optional[game].correctAnswers = result.correct.length;
