@@ -27,6 +27,7 @@ const MainGame: FC = () => {
       </div>
       <div className="sprint__answer-buttons">
         <button
+          disabled={store.disabledButton}
           className="sprint__false-button"
           onClick={async () => {
             store.chekAnswer(false);
@@ -36,6 +37,7 @@ const MainGame: FC = () => {
           <div className="sprint__key">1</div>
         </button>
         <button
+          disabled={store.disabledButton}
           className="sprint__true-button"
           onClick={async () => {
             store.chekAnswer(true);

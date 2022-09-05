@@ -45,6 +45,8 @@ export class Store {
     incorrect: [],
     maxtry: 0
   };
+  
+  disabledButton = false;
 
   ChoiseButtonsPropsArray: ILevelButtonProps[] = [
     {level:'A1', group:'0', color: 'white', activeColor:'lightgreen'},
@@ -151,9 +153,11 @@ export class Store {
   }
 
   async chekAnswer(bool: boolean) {
+    this.disabledButton = true;
     await this.generateQuestion();
     this.setUserAnswer(bool);
     this.isGuessed(this.currentWord);
+    this.disabledButton = false;
   }
 
    // eslint-disable-next-line @typescript-eslint/no-explicit-any
