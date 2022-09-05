@@ -51,7 +51,7 @@ const AuthForm: FC = () => {
     return (
       <div>
         <div className="auth_text">
-          Зарегестрируйтесь
+          Зарегистрируйтесь
         </div>
         <RegistrationForm></RegistrationForm>
         <UserMessage></UserMessage>

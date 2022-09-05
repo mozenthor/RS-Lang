@@ -154,8 +154,8 @@ export class Store {
 
   async chekAnswer(bool: boolean) {
     this.disabledButton = true;
-    await this.generateQuestion();
     this.setUserAnswer(bool);
+    await this.generateQuestion();
     this.isGuessed(this.currentWord);
     this.disabledButton = false;
   }

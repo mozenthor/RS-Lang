@@ -73,7 +73,7 @@ export const sprintResults = () => {
     }});
     store.gameResult.incorrect.forEach(el => {
         if(!sprintRes.correct.includes(el) && !sprintRes.incorrect.includes(el)){
-            sprintRes.correct.push(el)
+            sprintRes.incorrect.push(el)
     }});
     sprintRes.maxtry = store.gameResult.maxtry;
     return sprintRes;
