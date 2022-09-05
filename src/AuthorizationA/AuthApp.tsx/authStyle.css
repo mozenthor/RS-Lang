@@ -46,3 +46,10 @@
 .auth_error {
   color: red;
 }
+
+.auth__main-page_wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}

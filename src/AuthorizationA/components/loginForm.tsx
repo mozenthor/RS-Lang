@@ -1,11 +1,13 @@
 import { observer } from "mobx-react-lite";
 import { FC, useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Context } from "../AuthApp.tsx/AuthApp";
 
 const LoginForm: FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const {store} = useContext(Context);
+  const navigate = useNavigate();
   
   return (
     <div
@@ -17,6 +19,14 @@ const LoginForm: FC = () => {
         value = {email}
         type="email"
         placeholder='Введите адрес электронной почты'
+        onKeyPress={async (e) => {
+          if (e.key === 'Enter'){
+            await store.login(email, password);
+            if (store.isAuth === true) {
+              navigate("/");
+            }
+          }
+        }}
       />
       <input
       className={'auth_input'}
@@ -24,10 +34,23 @@ const LoginForm: FC = () => {
         value = {password}
         type="password"
         placeholder='Введите пароль'
+        onKeyPress={async (e) => {
+          if (e.key === 'Enter'){
+            await store.login(email, password);
+            if (store.isAuth === true) {
+              navigate("/");
+            }
+          }
+        }}
       />
       <button
         className={'auth_button'}
-        onClick={() => store.login(email, password)}>
+        onClick={async () => {
+          await store.login(email, password);
+          if (store.isAuth === true) {
+            navigate("/");
+          }
+          }}>
         Войти
       </button>
     </div>
