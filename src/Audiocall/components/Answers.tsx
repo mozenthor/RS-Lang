@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Twords } from '../../types';
 
 import style from '../AudioCall.module.css';
-const Answers = (props: { words: Twords; cb: any; description: any }) => {
+const Answers = (props: { words: Twords; cb:{(v: string): void }; description: {():void} }) => {
   const answers = props.words.answers;
   const [currentAnswer, setCurrentAnswer] = useState('');
   const [isAnswered, setAnswered] = useState(false);
@@ -45,7 +45,7 @@ const Answers = (props: { words: Twords; cb: any; description: any }) => {
     );
   });
 
-  const keyboardHandler = (e: any): void => {
+  const keyboardHandler = (e: KeyboardEvent): void => {
     const keys = ['Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5'];
     const code = e.code;
     const isAllowed = keys.indexOf(code);

@@ -5,7 +5,7 @@ import Sound from './Sound';
 import { Twords } from '../../types';
 import Description from './Description';
 
-const AudioSelect = (props: { sound: string; answers: string[]; cb: any; words: Twords }) => {
+const AudioSelect = (props: { sound: string; answers: string[]; cb: { (v: string): void }; words: Twords }) => {
   const [isVisible, setVisible] = useState(false);
   useEffect(() => {
     setVisible(false);

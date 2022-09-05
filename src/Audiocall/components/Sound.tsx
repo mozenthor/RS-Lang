@@ -7,7 +7,7 @@ const Sound = (props: { value: string }) => {
   const SERVER_URL = 'https://final-rslang-backend.herokuapp.com/';
   const audioSource = SERVER_URL + props.value;
   const audio = new Audio(audioSource);
-  const keyboardHandler = (e: any): void => {
+  const keyboardHandler = (e: KeyboardEvent): void => {
     const code = e.code;
     if (code === 'Space') {
       audio.play();

@@ -7,19 +7,22 @@ import stat, { levels, ENTER_CODE } from '../data/default';
 
 const Game = (props: { words: Twords[]; cb: (value: Tstats) => void; level: string; page: string }) => {
   const [index, setIndex] = useState(0);
-  const [wordsList] = useState(props.words); 
+  const [wordsList] = useState(props.words);
   const [currentTry] = useState({ count: 0 });
-  const [stats] = useState(stat);
+  const [stats, setStats] = useState({ ...stat });
   const progress: string[] = new Array(wordsList.length).fill('new');
   const [status, setStatus] = useState([...progress]);
   const [words, setWords] = useState(wordsList[index]);
   const engLevel = parseInt(props.level) || 0;
   const info = `Уровень: ${levels[engLevel]} Страница: ${props.page}`;
-
+ 
   useEffect(() => {
     setWords(wordsList[index]);
   }, [index]);
+  useEffect(() => {
+    setStats({ ...stat });
 
+  }, [props]);
   const addStat = (isRight: boolean) => {
     if (isRight) {
       stats.correct.push(words.id);
@@ -50,18 +53,16 @@ const Game = (props: { words: Twords[]; cb: (value: Tstats) => void; level: stri
       colorStatus();
     } else {
       colorStatus();
-     
       props.cb(stats);
     }
   };
-  const keyboardHandler = (e: any): void => {
-    const code = e.keyCode;
-
+  const keyboardHandler = (e: KeyboardEvent): void => {
+    const code = e.key;
     if (code === ENTER_CODE) {
       next();
     }
   };
-  const compare = (answer: string) => {
+  const compare = (answer: string): void => {
     let color = 'wrong';
     if (words.wordTranslate === answer) {
       color = 'succeses';
