@@ -1,14 +1,16 @@
 import style from '../AudioCall.module.css';
 import { Tstats, Twords } from '../../types';
 import { updateStats } from '../../service/service';
+import { Dispatch, SetStateAction } from 'react';
 
-const Stat = (props: { value: Tstats; words: Twords[] }) => {
+const Stat = (props: { value: Tstats; words: Twords[], reset: Dispatch<SetStateAction<Tstats>> }) => {
   const statistics = props.value;
   const init = Boolean(statistics.correct.length || statistics.incorrect.length);
-  if (init) {
+ 
+  if (init) {  
     updateStats(statistics, 'audiocall');
   }
-
+  
   const statList = props.words.map((e) => {
     const isGuessed = statistics.correct.includes(e.id);
     return (
