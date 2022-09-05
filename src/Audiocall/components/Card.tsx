@@ -19,7 +19,6 @@ const AudioSelect = (props: { sound: string; answers: string[]; cb: any; words: 
         <Sound value={props.words.audio} />
         {isVisible && <Description words={props.words} />}
       </div>
-
       <Answers words={props.words} cb={props.cb} description={toggleVisiblity} />
     </div>
   );
