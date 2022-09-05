@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { FC, useContext, useEffect } from "react";
 import UserMessage from "../components/ErrorMessage";
 import LoginForm from "../components/loginForm";
-import Logout from "../components/logout";
+// import Logout from "../components/logout";
 import RegistrationForm from "../components/RegistratonForm";
 
 import { Context } from "./AuthApp";
@@ -13,18 +13,17 @@ const AuthForm: FC = () => {
   useEffect(() => {
     if (localStorage.getItem('token')) {
       store.setAuth(true);
-      // store.checkAuth();
     }
   }, [])
 
-  if (store.isAuth) {
-    return (
-      <div>
-        Добро пожаловать, {localStorage.getItem('userName')}
-        <Logout></Logout>
-      </div>
-    )
-  }
+  // if (store.isAuth) {
+  //   return (
+  //     <div>
+  //       Добро пожаловать, {localStorage.getItem('userName')}
+  //       <Logout></Logout>
+  //     </div>
+  //   )
+  // }
 
   if (store.isLoginRegistration) {
     return (
