@@ -11,15 +11,15 @@ const MainGame: FC = () => {
       <div className="sprint__game-info">
         <div>
           Уровень сложности:
-          <span style={{fontWeight: 600, marginLeft: '5px'}}>{store.ChoiseButtonsPropsArray[Number(store.group)].level}</span>
-          
+          <span style={{ fontWeight: 600, marginLeft: '5px' }}>{store.ChoiseButtonsPropsArray[Number(store.group)].level}</span>
+
         </div>
         <div>
           Очки:
-          <span style={{fontWeight: 600, marginLeft: '5px'}}>{store.score}</span>
+          <span style={{ fontWeight: 600, marginLeft: '5px' }}>{store.score}</span>
         </div>
         <div>Время:
-          <span style={{fontWeight: 600, marginLeft: '5px'}}>{store.time}</span>
+          <span style={{ fontWeight: 600, marginLeft: '5px' }}>{store.time}</span>
         </div>
       </div>
       <div className="sprint__answer-question">
@@ -29,22 +29,20 @@ const MainGame: FC = () => {
         <button
           className="sprint__false-button"
           onClick={async () => {
-            await store.generateQuestion();
-            store.setUserAnswer(false);
-            store.isGuessed(store.currentWord);
+            store.chekAnswer(false);
           }}
         >
           Неверно
+          <div className="sprint__key">1</div>
         </button>
         <button
           className="sprint__true-button"
           onClick={async () => {
-            await store.generateQuestion();
-            store.setUserAnswer(true);
-            store.isGuessed(store.currentWord);
+            store.chekAnswer(true);
           }}
         >
           Верно
+          <div className="sprint__key">2</div>
         </button>
       </div>
     </div>

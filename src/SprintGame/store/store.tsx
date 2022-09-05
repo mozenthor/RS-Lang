@@ -121,6 +121,7 @@ export class Store {
       this.setState('stats');
       this.setBestSeries();
       updateStats(sprintResults(), 'sprint');
+      document.removeEventListener('keypress', this.handleKey);
     }
   }
 
@@ -128,6 +129,7 @@ export class Store {
     this.group = '';
     this.page = '';
     cancelAnimationFrame(this.animation);
+    document.removeEventListener('keypress', this.handleKey);
     this.state = 'startScreen';
     this.question = '';
     this.answer = '';
@@ -147,4 +149,22 @@ export class Store {
       this.gameResult.maxtry = this.bestSeries;
     };
   }
+
+  async chekAnswer(bool: boolean) {
+    await this.generateQuestion();
+    this.setUserAnswer(bool);
+    this.isGuessed(this.currentWord);
+  }
+
+   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   handleKey = async (event: any) => {
+    if (this.state === 'mainGame') {
+      if (event.key === '1') {
+        this.chekAnswer(false)
+      } else if (event.key === '2') {
+        this.chekAnswer(true)
+      }
+    }
+    event.preventDefault();
+  };
 }
