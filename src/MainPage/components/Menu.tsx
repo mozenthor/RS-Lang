@@ -6,7 +6,7 @@ const Menu = () => {
   const toogleMenu = () => { setDropped(!isDropped); }
   return (
     <div className={ styles.header__menu }  onClick={ toogleMenu }>
-      <div className={ styles.dropdown__header } >Menu</div>
+      <div className={ styles.dropdown__header } >Меню</div>
         { isDropped && (<DropDownList mouseleave={ toogleMenu }/>) }
     </div>
   );
