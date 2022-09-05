@@ -46,13 +46,15 @@ const Answers = (props: { words: Twords; cb:{(v: string): void }; description: {
   });
 
   const keyboardHandler = (e: KeyboardEvent): void => {
+    
     const keys = ['Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5'];
     const code = e.code;
     const isAllowed = keys.indexOf(code);
 
-    if (isAllowed >= 0) {
+    if (isAllowed >= 0 ) {
       const answer = answers[isAllowed];
       handleAnswer(answer);
+      window.removeEventListener('keydown', keyboardHandler);
     }
   };
 
@@ -62,7 +64,7 @@ const Answers = (props: { words: Twords; cb:{(v: string): void }; description: {
       window.removeEventListener('keydown', keyboardHandler);
     };
   }, [answers]);
-
+  
   return <div className={style.answers}>{buttons}</div>;
 };
 export default Answers;
