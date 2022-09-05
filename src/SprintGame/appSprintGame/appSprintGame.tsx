@@ -14,8 +14,9 @@ const AppSprint: FC = () => {
   if(params.group && params.page) {
     store.group = params.group;
     store.page = params.page;
+    store.isTextBook = true;
   } else {
-    store.setPage()
+    store.setRandomPage()
   }
 
   if (store.state === 'startScreen') {

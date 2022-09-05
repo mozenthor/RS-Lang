@@ -5,6 +5,7 @@ import book from '../assets/book.svg';
 import reveal from '../assets/pencils.svg';
 import clock from '../assets/clocks.svg';
 import stat from '../assets/stat.svg';
+import { store } from '../../SprintGame/appSprintGame';
 const Tile = () => {
   return (
     <section className={styles.posters}>
@@ -28,7 +29,7 @@ const Tile = () => {
         <img className={styles.tile__img} src={clock} alt="logo" />
         <h3 className={styles.tile__title}>Спринт</h3>
         <p className={styles.tile__text}>мини-игра</p>
-        <Link className={styles.tile__button} to="/sprint">
+        <Link onClick={() => store.unsetParams()} className={styles.tile__button} to="/sprint">
           Вперед
         </Link>
       </div>

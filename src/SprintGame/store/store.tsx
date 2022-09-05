@@ -48,6 +48,12 @@ export class Store {
   
   disabledButton = false;
 
+  words!:IWord[];
+
+  count = 18;
+
+  isTextBook = false;
+
   ChoiseButtonsPropsArray: ILevelButtonProps[] = [
     {level:'A1', group:'0', color: 'white', activeColor:'lightgreen'},
     {level:'A2', group:'1', color: 'white', activeColor:'lightpink'},
@@ -77,21 +83,44 @@ export class Store {
     this.state = state;
   }
 
-  setPage(){
+  setRandomPage(){
     this.page = randomNumber(0, 29).toString();
   }
 
-  async generateQuestion() {
-    const randomWord = randomNumber(0, 19);
-    const randomWordTranslate = randomNumber(0,18);
-    const response = localStorage.getItem('token')
-      ? await services.getWords(this.group, this.page)
-      : await services.getWords(this.group, this.page);
+   generateQuestion = async () => {
+    const randomWord = randomNumber(0, this.count);
+    let response = this.words;
+    if (response.length < 3) {
+      if (this.isTextBook) {
+        if(this.page === '0') {
+          cancelAnimationFrame(this.animation);
+          this.setState('stats');
+          this.setBestSeries();
+          updateStats(sprintResults(), 'sprint');
+          document.removeEventListener('keypress', this.handleKey);
+        } else {
+          this.page = (Number(this.page) - 1).toString();
+        }
+      } else {
+        this.setRandomPage();
+      }
+      await this.setWords();
+      response = this.words
+      this.count = 18;
+    }
+    console.log(this.page)
     this.currentWord = response.splice(randomWord, 1)[0];
-    const randomAnswers = [this.currentWord.wordTranslate, response[randomWordTranslate].wordTranslate]
+    const randomWordTranslate = randomNumber(0, this.count);
+    const randomAnswers = [this.currentWord.wordTranslate, response[randomWordTranslate].wordTranslate];
     this.question = this.currentWord.word;
     this.answer = randomAnswers[randomNumber(0, 1)]
     this.correctAnswer = (this.currentWord.wordTranslate === this.answer) ? true : false;
+  }
+
+
+  async setWords() {
+    const response = await services.getWords(this.group, this.page)
+    this.words = response;
   }
 
   setUserAnswer(bool: boolean){
@@ -138,6 +167,7 @@ export class Store {
     this.correctAnswer = true;
     this.userAnswer = true;
     this.score = 0;
+    this.count = 18;
     this.guessedWords = [];
     this.notGuessedWords = [];
     this.currentSeries = 0;
@@ -154,6 +184,7 @@ export class Store {
 
   async chekAnswer(bool: boolean) {
     this.disabledButton = true;
+    this.count -= 1;
     this.setUserAnswer(bool);
     await this.generateQuestion();
     this.isGuessed(this.currentWord);

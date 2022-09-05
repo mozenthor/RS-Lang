@@ -49,7 +49,7 @@ const AuthForm: FC = () => {
     )
   } else {
     return (
-      <div>
+      <div className="auth_wrapper">
         <div className="auth_text">
           Зарегистрируйтесь
         </div>

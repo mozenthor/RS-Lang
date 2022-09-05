@@ -6,7 +6,8 @@ import ChoiseLevelButtons from "./ChoiseLevelButtons";
 const StartScreen: FC = () => {
   const { store } = useContext(Context);
 
-  const start = () => {
+  const start = async () => {
+    await store.setWords();
     store.generateQuestion();
     store.setState('mainGame');
     store.startTime = new Date().getTime();
