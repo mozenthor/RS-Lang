@@ -15,7 +15,7 @@ const GameRoute = (props: { init: TgameRoute }) => {
   const [isLoaded, setLoaded] = useState(false);
   const [level, setLevel] = useState(group);
   const [isGreeting, setGreeting] = useState(!initGreeting);
-  const [gameStat, setGameStat] = useState({...statDefault});
+  const [gameStat, setGameStat] = useState({ ...statDefault });
   const [isGame, setGame] = useState(!isGreeting);
   const [isStat, setIsStat] = useState(false);
 
@@ -35,21 +35,14 @@ const GameRoute = (props: { init: TgameRoute }) => {
   const gameCb = (obj: Tstats) => {
     setGame(false);
     setIsStat(true);
-   // console.log(obj)
-    // const r = Object.assign({},obj)
-     setGameStat({...obj});
-    // gameStat.incorrect = [];
-    // gameStat.correct = [];
-    // gameStat.maxtry = 0;
-    // setGameStat(gameStat);
-    // console.log(gameStat)
+    setGameStat({ ...obj });
   };
 
   const content = (
     <div>
       {isGreeting && <Greeting cb={greetingCb} />}
       {isGame && <Game cb={gameCb} words={words} level={level} page={page} />}
-      {isStat && <Stat value={gameStat} words={words} reset ={setGameStat} />}
+      {isStat && <Stat value={gameStat} words={words} reset={setGameStat} />}
     </div>
   );
   return <div>{isLoaded && content}</div>;
