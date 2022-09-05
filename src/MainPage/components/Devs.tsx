@@ -6,7 +6,7 @@ const Devs = () => {
   return (   
       <section className={styles.devs}>
         <h3 className={styles.devs__title}>О команде</h3>
-        {devsData.map(item => <DevsItem info={item}/>)}
+        {devsData.map(item => <DevsItem info={item} key={item.name}/>)}
       </section>   
   );
 };
