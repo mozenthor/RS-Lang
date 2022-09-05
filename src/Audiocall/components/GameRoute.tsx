@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import Game from '../components/Game';
 import Greeting from '../components/Greeting';
 import Stat from '../components/Stat';
-import { Tstats } from '../../types';
-import { TgameRoute } from '../../types';
+import { Tstats, TgameRoute, Twords } from '../../types';
 import statDefault from '../data/default';
 import { fetchPreparedWords, randomGroup, randomPage } from '../services';
-import { Twords } from '../../types';
 
 const GameRoute = (props: { init: TgameRoute }) => {
   const initGreeting = props.init.group || props.init.page;
@@ -15,36 +13,36 @@ const GameRoute = (props: { init: TgameRoute }) => {
   const group = props.init.group || String(randomGroup());
   const [words, setWords] = useState<Twords[]>([]);
   const [isLoaded, setLoaded] = useState(false);
-  const [isGreeting, setGreeting] = useState(Boolean(!initGreeting));
+  const [level, setLevel] = useState(group);
+  const [isGreeting, setGreeting] = useState(!initGreeting);
   const [stat, setStat] = useState(statDefault);
-  const [isGame, setGame] = useState(false);
+  const [isGame, setGame] = useState(!isGreeting);
+  const [isStat, setIsStat] = useState(false);
 
   useEffect(() => {
-    fetchPreparedWords(page, group, setWords);
+    fetchPreparedWords(page, level, setWords);
   }, []);
 
   useEffect(() => {
-    if (words.length) {
-      setLoaded(true);
-    } else {
-      setLoaded(false);
-    }
+    setLoaded(!!words.length);
   }, [words]);
 
-  const greetingCb = () => {
+  const greetingCb = (value: string) => {
+    setLevel(value);
     setGreeting(false);
     setGame(true);
   };
   const gameCb = (obj: Tstats) => {
     setGame(false);
+    setIsStat(true);
     setStat(obj);
   };
 
   const content = (
     <div>
       {isGreeting && <Greeting cb={greetingCb} />}
-      {isGame && <Game cb={gameCb} words={words} />}
-      {stat && <Stat value={stat} />}
+      {isGame && <Game cb={gameCb} words={words} level={level} page={page} />}
+      {isStat && <Stat value={stat} words={words} />}
     </div>
   );
   return <div>{isLoaded && content}</div>;
