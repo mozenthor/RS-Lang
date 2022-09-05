@@ -110,7 +110,7 @@ export class Store {
   }
 
   timer = () => {
-    const gameDuration = 10;
+    const gameDuration = 30;
     const currentTime = new Date().getTime();
     const timing = (currentTime - this.startTime) / 1000;
     this.time = gameDuration - Math.trunc(timing);
@@ -127,6 +127,8 @@ export class Store {
   unsetParams() {
     this.group = '';
     this.page = '';
+    cancelAnimationFrame(this.animation);
+    this.state = 'startScreen';
     this.question = '';
     this.answer = '';
     this.correctAnswer = true;
