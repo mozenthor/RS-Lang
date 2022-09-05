@@ -67,8 +67,14 @@ export const sprintResults = () => {
         incorrect: [],
         maxtry: 0
       };
-    store.gameResult.correct.forEach(el => sprintRes.correct.push(el));
-    store.gameResult.incorrect.forEach(el => sprintRes.incorrect.push(el));
+    store.gameResult.correct.forEach(el => {
+        if(!sprintRes.correct.includes(el) && !sprintRes.incorrect.includes(el)){
+            sprintRes.correct.push(el)
+    }});
+    store.gameResult.incorrect.forEach(el => {
+        if(!sprintRes.correct.includes(el) && !sprintRes.incorrect.includes(el)){
+            sprintRes.correct.push(el)
+    }});
     sprintRes.maxtry = store.gameResult.maxtry;
     return sprintRes;
 }

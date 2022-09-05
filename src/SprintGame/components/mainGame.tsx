@@ -28,8 +28,8 @@ const MainGame: FC = () => {
       <div className="sprint__answer-buttons">
         <button
           className="sprint__false-button"
-          onClick={() => {
-            store.generateQuestion();
+          onClick={async () => {
+            await store.generateQuestion();
             store.setUserAnswer(false);
             store.isGuessed(store.currentWord);
           }}
@@ -38,8 +38,8 @@ const MainGame: FC = () => {
         </button>
         <button
           className="sprint__true-button"
-          onClick={() => {
-            store.generateQuestion();
+          onClick={async () => {
+            await store.generateQuestion();
             store.setUserAnswer(true);
             store.isGuessed(store.currentWord);
           }}
