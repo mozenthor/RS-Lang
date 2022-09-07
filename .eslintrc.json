@@ -1,0 +1,47 @@
+{
+  "env": {
+      "browser": true,
+      "es2021": true,
+      "node": true
+  },
+  "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "airbnb-typescript/base",
+      "plugin:import/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+      "project": "tsconfig.json",
+      "ecmaVersion": "latest",
+      "sourceType": "module"
+  },
+  "plugins": [
+      "@typescript-eslint",
+      "eslint-plugin-import"
+  ],
+  "rules": {
+      "@typescript-eslint/no-explicit-any": 2,
+      "@typescript-eslint/no-var-requires": "off",
+      "import/extensions": "off"
+  },
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "extends": [
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+        "prettier"
+      ],
+      "parser": "@typescript-eslint/parser",
+      "plugins": ["@typescript-eslint"]
+    }
+  ],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  }
+}
