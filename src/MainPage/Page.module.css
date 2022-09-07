@@ -182,6 +182,11 @@ body {
    margin: 0 auto;
     height: 100%;
 }
+.row__link {
+    text-decoration: none;
+    color:#16a085;
+    font-weight: bold;
+}
 .row__avatar {
     width: 150px;
     height: 150px;

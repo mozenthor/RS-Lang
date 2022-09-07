@@ -5,6 +5,7 @@ interface IDevsItem {
     info: {
       name: string,
       text: string,
+      github: string
     }
 }
 const DevsItem: React.FC<IDevsItem> = (props) => {
@@ -15,6 +16,7 @@ const DevsItem: React.FC<IDevsItem> = (props) => {
             </div>
             <div className={styles.row__content}>
               <h2 className={styles.row__title}>{props.info.name}</h2>
+              <p><a className={styles.row__link} href={props.info.github}>Github</a></p>
               <p className={styles.row__text}>{props.info.text}</p>
             </div>
           </div>       
